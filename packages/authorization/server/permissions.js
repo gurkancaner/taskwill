@@ -1,0 +1,4 @@
+AuthorizationPermissionList = {
+    modifyRoles:"Modify Roles",
+
+}

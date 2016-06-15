@@ -1,0 +1,21 @@
+.login-btn{
+  background-color: #00ACED;
+}
+.share-on-twitter{
+  color: #00ACED !important;
+}
+span.badge{
+  min-width: inherit;
+}
+span.badge.new:after {
+    content: "" !important;
+}
+.tweet-container{
+  padding:  0.3em 0.3em 0 1em !important
+}
+.froalaEditorContent ul{
+  padding-left: 40px;
+}
+.froalaEditorContent ul li{
+  list-style-type: disc;
+}

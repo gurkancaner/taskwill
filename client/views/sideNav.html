@@ -1,0 +1,40 @@
+<template name="sideNav">
+  <!-- START LEFT SIDEBAR NAV-->
+  <aside id="left-sidebar-nav">
+    <ul id="slide-out" class="side-nav fixed leftside-navigation">
+      <li class="user-details cyan darken-2">
+        <div class="row">
+          <div class="col col s4 m4 l4">
+            <img src="{{currentUser.services.twitter.profile_image_url}}" alt="" class="circle responsive-img valign profile-image">
+          </div>
+          <div class="col col s8 m8 l8">
+            <ul id="profile-dropdown" class="dropdown-content">
+              <li><a href="{{pathFor route ="logout"}}"><i
+                                    class="mdi-hardware-keyboard-tab"></i> Logout</a>
+              </li>
+            </ul>
+            <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown"><i
+                                class="mdi-navigation-arrow-drop-down right"></i>
+                            <span  class="truncate">{{currentUser.profile.name}}</span></a>
+
+            <p class="user-roal">{{currentUser.role}}</p>
+          </div>
+        </div>
+      </li>
+      <li class="bold {{isActive 'story/add'}}"><a href="{{pathFor "story/add"}}" class="waves-effect waves-green"><i
+                    class="mdi-content-add"></i> New Story</a>
+      </li>
+      {{#if userCan "manageRoles"}}
+      <li class="bold {{isActive 'stories'}}"><a href="{{pathFor "roles"}}" class="waves-effect waves-green"><i
+                    class="mdi-action-view-list"></i> Roles </a>
+      </li>
+      {{/if}}
+    </ul>
+
+    <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only"><i
+                class="mdi-navigation-menu"></i></a>
+  </aside>
+
+
+  <!-- END LEFT SIDEBAR NAV-->
+</template>
