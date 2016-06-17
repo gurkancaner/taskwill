@@ -1,0 +1,93 @@
+<template name="users">
+    <div id="work-collections">
+        <div class="row">
+            <div class="col s12">
+                <ul id="projects-collection" class="collection">
+                <li class="collection-item  ">
+                    <i class="mdi-hardware-security"></i>
+                    <span class="collection-header"><a href="{{pathFor route ='users'}}">{{_ "Users"}}</a></span>
+                </li>
+                {{#each Users}}
+                <li class="collection-item">
+                    <div class="row">
+                    <div class="col s6">
+                        <p class="collections-title">{{profile.name}}</p>
+                        <p class="collections-content">Level 1</p>
+                    </div>
+                    <div class="col s4">
+                        <div id="project-line-1">
+ 
+                          {{getUserRole Roles roles}}
+                          
+                        </div>
+                    </div>
+                    <div class="col s2">
+                        <a href="#edit-user" class="red-text user-edit-button secondary-content modal-trigger"><i
+                                                    class="small mdi-editor-mode-edit"></i></a>
+                    </div>
+                    </div>
+                </li>
+                {{/each}}
+                </ul>
+            </div>
+        </div>
+  </div>
+
+  <div id="edit-user" class="modal">
+        <div class="modal-content ">
+            <h4>{{_ "Edit User"}}</h4>
+            <div  class="section">
+              <div class="row">
+                <div class="col s12 m12 l6">
+                  <div class="card-panel">
+                    <div class="row">
+                      <form id="edit-user-form" class="col s12">
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <input id="id" type="hidden" value="">
+                            <input id="name" type="text">
+                            <label class="active" for="name">{{_ "Name"}}</label>
+                          </div>
+                        </div>
+                        
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <select id="roles" multiple>
+                            <option value="" disabled selected>{{_ "Select roles for this user"}}</option>
+                            {{#each Roles}}
+                            <option value="{{_id}}">{{name}}</option>
+                            {{/each}}
+                            </select>
+                            <label>{{_ "Roles"}}</label>
+                          </div>
+                        </div>
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <button class="btn cyan waves-effect waves-light right modal-close" type="submit" name="action">Save
+                                <i class="mdi-content-send right"></i>
+                              </button>
+                            </div>
+                          </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Remove Confirm -->
+    <div id="remove-user" class="modal">
+      <div class="modal-content">
+        <h4>{{_ "Remove user from role"}}</h4>
+        <b><span id="username"></span></b>
+        <p>{{_ "Do you really want to remove above user from following role?"}}</p>
+        <b><span id="role-name"></span></b>
+      </div>
+      <div class="modal-footer">
+        <a href="#" id="confirm-user-remove" class=" modal-action modal-close waves-effect waves-green btn-flat red-text">{{_ "Remove"}}</a>
+        <a href="#" class=" modal-action modal-close waves-effect waves-green btn-flat">{{_ "Cancel"}}</a>
+      </div>
+    </div>
+   
+</template>

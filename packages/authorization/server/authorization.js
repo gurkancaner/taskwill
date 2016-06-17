@@ -1,18 +1,20 @@
 /**
-   * Publish the role
-   */
-Meteor.publish('role', function (roleId) {
-  check(roleId, String);
-  return Meteor.roles.find({
-    _id: roleId
-  });
+ * Publish the users
+ */
+Meteor.publish('users', function () {
+  if(Role.userCan("manageUsers", this.userId)){
+    return Meteor.users.find();    
+  }
+  return this.ready();
 });
-
 /**
  * Publish the roles
  */
 Meteor.publish('roles', function () {
-  return Meteor.roles.find();
+  if(Role.userCan("manageRoles", this.userId)){
+    return Meteor.roles.find();    
+  }
+  return this.ready();
 });
 
 /**
@@ -27,7 +29,6 @@ Meteor.publish('userRoles', function () {
       roles: 1
     }
   });
-
   if (user && user.roles) {
     return [
       Meteor.roles.find({
@@ -47,16 +48,31 @@ Meteor.publish('userRoles', function () {
 });
 
 Meteor.methods({
-  "addRole": function (name, permissions) {
+  //creates or updates role
+  "createRole": function (id, name, permissions) {
+    Meteor.checkUserCan("manageRoles");
     if (typeof permissions === 'undefined')
       permissions = [];
 
-    Meteor.roles.insert({
+    Meteor.roles.update({
+      _id:id
+    },{
       name: name,
       permissions: permissions
-    });
+    },
+    {upsert:true});
+  },
+  "deleteRole": function (id) {
+    Meteor.checkUserCan("manageRoles");
+
+    Meteor.roles.remove(id);
+    Meteor.users.update({roles:id}, {$pull:{
+      roles:id
+    }});
+    
   },
   "addPermissionsToRole": function (roleName, permissions) {
+    Meteor.checkUserCan("manageRoles");
     if (typeof permissions === 'string') {
       permissions = [permissions];
     }
@@ -70,6 +86,33 @@ Meteor.methods({
         }
 
       });
-  }
+  },/**
+     * Sets the user's role
+     * @param userId
+     * @param roles array of role ids or just a role id
+     */
+    setUserRoles: function (userId, roles) {
+      Meteor.checkUserCan("manageUsers");
+        // Check if roles is a string or array
+        if (typeof roles === 'string') {
+            roles = [roles];
+
+        } else if (!(roles instanceof Array)) {
+            throw new Meteor.Error('invalid-permissions', "Roles must be an Array of numbers");
+        }
+        // Check if role exists
+        if (roles && Meteor.roles.find({
+            _id: {
+                $in: roles
+            }
+        }).count() < roles.length) {
+            throw new Meteor.Error('role-not-found', "The role does not exist");
+        }
+        return Meteor.users.update(userId, {
+            $set: {
+                roles: roles
+            }
+        });
+    },
 });
 

@@ -18,10 +18,12 @@ Router.configure({
 
   },
 
-  controller: 'ApplicationController'
+  controller: 'ApplicationController',
+  waitOn: function() { return Meteor.subscribe('userRoles');}
 
 });
 
+Router.route('accessDenied');
 
 //auth
 Router.route('login', function() {
@@ -44,7 +46,18 @@ Router.route('register', function() {
   }
 });
 
-//story
+Router.route('roles',{
+    permission:"manageRoles"
+});
+
+Router.route('users',{
+    permission:"manageUsers"
+});
+Router.route('users/role/:role',{
+    permission:"manageUsers",
+    template: "users"
+});
+
 Router.route('/', {
   name: 'home',
   template: 'home'

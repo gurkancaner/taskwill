@@ -19,3 +19,9 @@ span.badge.new:after {
 .froalaEditorContent ul li{
   list-style-type: disc;
 }
+
+@media only screen and (max-width: 992px) {
+  .side-nav.fixed {
+    left: 0;
+  }
+}

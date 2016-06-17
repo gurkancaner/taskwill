@@ -10,7 +10,7 @@ Package.describe({
   documentation: 'README.md'
 });
 
-Package.onUse(function(api) {
+Package.onUse(function (api) {
   api.versionsFrom('1.3.2.4');
   api.use('ecmascript');
   api.use('accounts-password');
@@ -19,12 +19,13 @@ Package.onUse(function(api) {
   api.use('tracker', 'client');
   api.use('templating', 'client');
   api.use('underscore');
+
   api.mainModule('role.js');
-  
+
   api.addFiles([
     "server/authorization.js",
+    "permissions.js",
   ], 'server');
-
   api.addFiles([
     "client/authorization.js",
   ], 'client');
@@ -32,7 +33,7 @@ Package.onUse(function(api) {
   api.export("Role");
 });
 
-Package.onTest(function(api) {
+Package.onTest(function (api) {
   api.use('ecmascript');
   api.use('tinytest');
   api.use('gurkancaner:authorization');

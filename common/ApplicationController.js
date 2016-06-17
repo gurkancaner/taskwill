@@ -1,8 +1,11 @@
 var PUBLIC_ROUTES = ['login', 'register', 'accessDenied', 'notFound'];
 ApplicationController = RouteController.extend({
   layoutTemplate: 'master',
-  onBeforeAction: function() {
+  onBeforeAction: function () {
     var self = this;
+
+    
+
     var name = self.route.getName();
     if (PUBLIC_ROUTES.indexOf(name) != -1) {
       self.layout('masterPublic');
@@ -10,9 +13,16 @@ ApplicationController = RouteController.extend({
     } else {
       if (Meteor.userId() === null) {
         Router.go('login');
-      } else {
-        self.next();
+      } else if (Meteor.user()) {
+        if (self.route.options && self.route.options.permission
+          && !Meteor.userCan(self.route.options.permission)) {
+          this.render('accessDenied');
+          this.stop();
+        } else {
+          self.next();
+        }
       }
+
     }
   }
 });
