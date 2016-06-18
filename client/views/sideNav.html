@@ -21,11 +21,11 @@
           </div>
         </div>
       </li>
-      <li class="bold {{isActive 'story/add'}}"><a href="{{pathFor "story/add"}}" class="waves-effect waves-green"><i
-                    class="mdi-content-add"></i> New Story</a>
+      <li class="bold {{isActive 'tasks'}}"><a href="{{pathFor "tasks"}}" class="waves-effect waves-green"><i
+                    class="mdi-navigation-check"></i> {{_ "Tasks"}}<span class="new badge">{{TaskCount}}</span></a>
       </li>
       {{#if userCan "manageRoles"}}
-      <li class="bold {{isActive 'stories'}}"><a href="{{pathFor "roles"}}" class="waves-effect waves-green"><i
+      <li class="bold {{isActive 'roles'}}"><a href="{{pathFor "roles"}}" class="waves-effect waves-green"><i
                     class="mdi-action-view-list"></i> Roles </a>
       </li>
       {{/if}}

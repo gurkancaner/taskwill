@@ -1,5 +1,5 @@
 Template.sideNav.helpers({
-  StoryCount: function() {
+  TaskCount: function() {
     return 4
   }
 });

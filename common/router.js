@@ -25,7 +25,7 @@ Router.configure({
 
 Router.route('accessDenied');
 
-//auth
+//----------------auth start--------------
 Router.route('login', function() {
   if (Meteor.userId()) {
     Router.go("/");
@@ -57,6 +57,15 @@ Router.route('users/role/:role',{
     permission:"manageUsers",
     template: "users"
 });
+//--------------auth end--------------
+
+//----------------task start--------------
+Router.route('tasks');
+Router.route('tasks/:id',{
+    template: "taskView"
+});
+
+//----------------task end--------------
 
 Router.route('/', {
   name: 'home',

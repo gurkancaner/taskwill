@@ -81,7 +81,7 @@ Meteor.methods({
         name: roleName
       }, {
 
-        $push: {
+        $addToSet: {
           permissions: permissions
         }
 

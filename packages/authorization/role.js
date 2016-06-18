@@ -45,7 +45,9 @@ Role = {
     AuthorizationPermissions: {
         manageRoles: "Manage roles; view, create, edit, delete roles",
         manageUsers: "Manage users; view, edit, delete users, change user roles",
-        assignRole: "Assign roles to users",
+        createTask: "Create task",
+        volunteerForTask: "Volunteer for task",
+        manageTasks: "Manage tasks",
 
     },
     /**
@@ -135,8 +137,10 @@ Role = {
 
         // Get role id
         if (Meteor.isClient) {
-            if(Meteor.user() !== undefined)
+            if(Meteor.user() !== undefined && Meteor.user() !== null)
                 roles = Meteor.user().roles;
+            else 
+                return false;
 
         } else if (Meteor.isServer) {
             if (typeof userId !== 'string' || userId.length < 1) {
@@ -150,7 +154,7 @@ Role = {
     checkPermissionsExistance: function (permissions) {
         for (permission of permissions) {
             if (!Role.AuthorizationPermissions.hasOwnProperty(permission))
-                throw new Meteor.Error("Undefined permissions", "Permission should be added to AuthorizationPermissions list by developer!");
+                throw new Meteor.Error("Undefined permissions: "+permission, "Permission should be added to AuthorizationPermissions list by developer!");
         }
     }
 };
