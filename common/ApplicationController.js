@@ -24,5 +24,8 @@ ApplicationController = RouteController.extend({
       }
 
     }
+  },
+  onAfterAction: function () {
+    $('.collapsible').collapsible();
   }
 });

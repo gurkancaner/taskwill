@@ -29,6 +29,22 @@
                     class="mdi-action-view-list"></i> Roles </a>
       </li>
       {{/if}}
+      {{#if userCan "changeSettings"}}
+      <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+              <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-settings"></i> Settings</a>
+                  <div class="collapsible-body">
+                      <ul>
+                          <li class="{{isActive 'tags'}}"><a href="{{pathFor 'tags'}}" >Tags</a>
+                          </li>
+                          <li class="{{isActive 'tags2'}}"><a href="{{pathFor 'tags2'}}" >User Settings</a>
+                          </li>
+                      </ul>
+                  </div>
+              </li>
+          </ul>
+      </li>
+      {{/if}}
     </ul>
 
     <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only"><i

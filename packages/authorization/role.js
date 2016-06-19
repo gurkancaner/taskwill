@@ -48,6 +48,7 @@ Role = {
         createTask: "Create task",
         volunteerForTask: "Volunteer for task",
         manageTasks: "Manage tasks",
+        changeSettings: "Change Settings",
 
     },
     /**

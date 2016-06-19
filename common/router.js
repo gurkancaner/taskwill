@@ -67,6 +67,14 @@ Router.route('tasks/:id',{
 
 //----------------task end--------------
 
+//----------------settings start--------------
+Router.route('settings/tags',{
+    template: "tags",
+    name:"tags"
+});
+
+//----------------settings end--------------
+
 Router.route('/', {
   name: 'home',
   template: 'home'

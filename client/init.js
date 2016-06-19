@@ -1,13 +1,17 @@
 Deps.autorun(function() {
     Meteor.subscribe("tasks");
+    Meteor.subscribe("tags");
 });
 
 
 
 Meteor.startup(function() {
   TAPi18n.setLanguage(getUserLanguage());
+  
 });
 Template.sideNav.onRendered(function() {
+
+
   /*================================================================================
    Item Name: Materialize - Material Design Admin Template
    Version: 2.3
@@ -15,7 +19,7 @@ Template.sideNav.onRendered(function() {
    Author URL: http://www.themeforest.net/user/geekslabs
    ================================================================================*/
 
-  $(function() {
+  this.$(function() {
 
     "use strict";
 
@@ -108,6 +112,7 @@ Template.sideNav.onRendered(function() {
     $('.sidebar-collapse').sideNav({
       edge: 'left', // Choose the horizontal origin
     });
+    $('.collapsible').collapsible();
 
     // FULL SCREEN MENU (Layout 02)
     $('.menu-sidebar-collapse').sideNav({
