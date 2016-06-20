@@ -7,7 +7,7 @@ Meteor.publish('tasks', function () {
 
 Meteor.methods({
   //creates or updates role
-  "createTask": function (title, description, hours, dueDate) {
+  "createTask": function (title, description, hours, dueDate, tags) {
     Meteor.checkUserCan("createTask");
     Tasks.insert({
       title: title,
@@ -15,10 +15,11 @@ Meteor.methods({
       hours: hours,
       dueDate: dueDate,
       createdBy: Meteor.userId(),
-      createdAt: new Date()
+      createdAt: new Date(),
+      tags: tags
     });
   },
-  "updateTask": function (id, title, description, hours, dueDate) {
+  "updateTask": function (id, title, description, hours, dueDate, tags) {
     var selector = { _id: id, createdBy: Meteor.userId() };
     if (Meteor.userCan("manageTasks")) {
       selector = { _id: id }
@@ -29,7 +30,8 @@ Meteor.methods({
       hours: hours,
       dueDate: dueDate,
       updatedBy: Meteor.userId(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      tags: tags
     });
   },
   "deleteTask": function (id) {

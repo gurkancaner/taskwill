@@ -80,6 +80,6 @@ span.badge.new:after {
   color: #9e9e9e;
 }
 .tag-color-view{
-  padding-left:40px;
-  border: 1px solid #9e9e9e;
+  padding-left:20px;
+  margin-right:5px;
 }

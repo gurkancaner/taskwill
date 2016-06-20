@@ -15,7 +15,9 @@
                       <i class="material-icons circle green">insert_chart</i>
                       <span class="title"><a id="view-task-button" href="#task-view" class="modal-trigger">{{title}}</a></span>
                         <p class="task-description truncate">{{description}} <br>
-                            <span class="task-cat teal">Work</span>
+                        {{#each tags}}
+                            <span class="task-cat" style="background-color: {{color}}">{{name}}</span>
+                        {{/each}}
                         </p>
                         <a class="manage-content" href="#"><i class="material-icons right">mode_edit</i></a>
                       <a href="#" id="{{volunteerStatus volunteers}}" class="secondary-content"><span class="ultra-small">{{dueDate}}</span>
@@ -59,6 +61,17 @@
                             <textarea id="description" class="materialize-textarea" length="120"></textarea>
                             <label class="active" for="duedate">{{_ "Description"}}</label>
                             </div>
+                        </div>
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <select id="tags" multiple>
+                            <option value="" disabled selected>{{_ "Select tags"}}</option>
+                            {{#each Tags}}
+                            <option value="{{_id}}"><span class="tag-color-view" style="background-color:{{color}};"></span>{{name}}</option>
+                            {{/each}}
+                            </select>
+                            <label>{{_ "Tags"}}</label>
+                          </div>
                         </div>
                         
                             <div class="row">

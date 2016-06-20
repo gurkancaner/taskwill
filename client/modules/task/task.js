@@ -15,6 +15,16 @@ Template.tasks.helpers({
       sort: {
         createdAt: -1
       }
+    }).map(function(doc){
+      if(doc.tags){
+      var tags = doc.tags.map(function(tagId){
+        return Tags.findOne(tagId);
+      });
+      return _.extend(doc,{
+                tags:tags
+            });
+      }
+      return doc;      
     });
   },
   volunteerStatus: function (volunteers) {
@@ -22,6 +32,13 @@ Template.tasks.helpers({
       return "favorite";
     else
       return "favorite_border";
+  },
+  Tags: function (){
+    return Tags.find({},{
+      sort:{
+        name:1
+      }
+    });
   }
 });
 
@@ -33,13 +50,14 @@ Template.tasks.events({
     var hours = target.find("#hours").value;
     var description = target.find("#description").value;
     var duedate = target.find("#duedate").value;
+    var tags = $(target.find("#tags")).val();
     if (id) {
-      Meteor.call("updateTask", id, title, description, hours, duedate, function (error, result) {
+      Meteor.call("updateTask", id, title, description, hours, duedate, tags, function (error, result) {
         if (error)
           console.log(error);
       });
     } else {
-      Meteor.call("createTask", title, description, hours, duedate, function (error, result) {
+      Meteor.call("createTask", title, description, hours, duedate, tags, function (error, result) {
         if (error)
           console.log(error);
       });
@@ -51,6 +69,8 @@ Template.tasks.events({
     $('#add-task #hours').val("");
     $('#add-task #description').val("");
     $('#add-task #duedate').val("");
+    $('#add-task #tags').val("");//set permissions
+    $('select').material_select();//update select box
   },
   'click .manage-content': function (event, target) {
     $('#add-task #id').val(this._id);
@@ -58,6 +78,11 @@ Template.tasks.events({
     $('#add-task #duedate').val(this.dueDate);
     $('#add-task #description').val(this.description);
     $('#add-task #hours').val(this.hours);
+    if(this.tags)
+      $('#add-task #tags').val(this.tags);//set permissions
+    else
+      $('#add-task #tags').val("");//set permissions
+    $('select').material_select();//update select box
     $('#add-task').openModal();
   },
   'click #view-task-button': function (event, target) {
