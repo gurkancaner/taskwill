@@ -1,4 +1,5 @@
 {
   "Login": "Giriş",
-  "Email":"Eposta"
+  "Email":"Eposta",
+  "level_number": "Düzey %s"
 }

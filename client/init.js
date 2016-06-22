@@ -1,6 +1,7 @@
 Deps.autorun(function() {
     Meteor.subscribe("tasks");
     Meteor.subscribe("tags");
+    Meteor.subscribe("userData");
 });
 
 

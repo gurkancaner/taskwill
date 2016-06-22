@@ -2,13 +2,29 @@
  * Publish the users
  */
 Meteor.publish('tasks', function () {
-  return Tasks.find();
+  var level = 0;
+  if(this.userId){
+    if(Role.userCan("manageTasks", this.userId)){
+      return Tasks.find();   
+    }else{
+      var user = Meteor.users.findOne(this.userId);
+      if(user)
+        level = user.level;
+    }
+  }
+  return Tasks.find({level:{$lte: level}});
 });
 
 Meteor.methods({
   //creates or updates role
-  "createTask": function (title, description, hours, dueDate, tags) {
+  "createTask": function (title, description, hours, dueDate, tags, level) {
     Meteor.checkUserCan("createTask");
+    if (Meteor.userCan("manageTasks")) {
+      if(!level)
+        level = 0;
+    }else
+      level = 0;
+    
     Tasks.insert({
       title: title,
       description: description,
@@ -16,23 +32,26 @@ Meteor.methods({
       dueDate: dueDate,
       createdBy: Meteor.userId(),
       createdAt: new Date(),
-      tags: tags
+      tags: tags,
+      level:level
     });
   },
-  "updateTask": function (id, title, description, hours, dueDate, tags) {
+  "updateTask": function (id, title, description, hours, dueDate, tags, level) {
     var selector = { _id: id, createdBy: Meteor.userId() };
-    if (Meteor.userCan("manageTasks")) {
-      selector = { _id: id }
-    }
-    Tasks.update(selector, {
+    var valuesObj = {
       title: title,
       description: description,
       hours: hours,
       dueDate: dueDate,
       updatedBy: Meteor.userId(),
       updatedAt: new Date(),
-      tags: tags
-    });
+      tags: tags,
+    };
+    if (Meteor.userCan("manageTasks")) {
+      selector = { _id: id }
+      valuesObj.level = Number(level);
+    }
+    Tasks.update(selector, valuesObj);
   },
   "deleteTask": function (id) {
     var selector = { _id: id, createdBy: Meteor.userId() };

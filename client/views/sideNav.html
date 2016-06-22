@@ -24,21 +24,22 @@
       <li class="bold {{isActive 'tasks'}}"><a href="{{pathFor "tasks"}}" class="waves-effect waves-green"><i
                     class="mdi-navigation-check"></i> {{_ "Tasks"}}<span class="new badge">{{TaskCount}}</span></a>
       </li>
-      {{#if userCan "manageRoles"}}
-      <li class="bold {{isActive 'roles'}}"><a href="{{pathFor "roles"}}" class="waves-effect waves-green"><i
-                    class="mdi-action-view-list"></i> Roles </a>
-      </li>
-      {{/if}}
+      
       {{#if userCan "changeSettings"}}
       <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
               <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-settings"></i> Settings</a>
                   <div class="collapsible-body">
                       <ul>
+                        <li class="{{isActive 'users'}}"><a href="{{pathFor 'users'}}" >Users</a>
+                        </li>
+                        {{#if userCan "manageRoles"}}
+                        <li class="bold {{isActive 'roles'}}"><a href="{{pathFor "roles"}}" class="waves-effect waves-green">Roles</a>
+                        </li>
+                        {{/if}}
                           <li class="{{isActive 'tags'}}"><a href="{{pathFor 'tags'}}" >Tags</a>
                           </li>
-                          <li class="{{isActive 'tags2'}}"><a href="{{pathFor 'tags2'}}" >User Settings</a>
-                          </li>
+                          
                       </ul>
                   </div>
               </li>

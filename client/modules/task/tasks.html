@@ -73,6 +73,19 @@
                             <label>{{_ "Tags"}}</label>
                           </div>
                         </div>
+                        {{#if userCan "manageTasks"}}
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <select id="level">
+                            <option value="" disabled selected>{{_ "Select level"}}</option>
+                            {{#each Levels}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                            </select>
+                            <label>{{_ "Level"}}</label>
+                          </div>
+                        </div>
+                        {{/if}}
                         
                             <div class="row">
                             <div class="input-field col s12">

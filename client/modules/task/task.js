@@ -39,6 +39,9 @@ Template.tasks.helpers({
         name:1
       }
     });
+  },
+  Levels: function(){
+    return _.range(0, +Meteor.user().level + 1);
   }
 });
 
@@ -51,13 +54,14 @@ Template.tasks.events({
     var description = target.find("#description").value;
     var duedate = target.find("#duedate").value;
     var tags = $(target.find("#tags")).val();
+    var level = $(target.find("#level")).val();
     if (id) {
-      Meteor.call("updateTask", id, title, description, hours, duedate, tags, function (error, result) {
+      Meteor.call("updateTask", id, title, description, hours, duedate, tags, level, function (error, result) {
         if (error)
           console.log(error);
       });
     } else {
-      Meteor.call("createTask", title, description, hours, duedate, tags, function (error, result) {
+      Meteor.call("createTask", title, description, hours, duedate, tags, level, function (error, result) {
         if (error)
           console.log(error);
       });
@@ -82,6 +86,7 @@ Template.tasks.events({
       $('#add-task #tags').val(this.tags);//set permissions
     else
       $('#add-task #tags').val("");//set permissions
+    $('#add-task #level').val(this.level);
     $('select').material_select();//update select box
     $('#add-task').openModal();
   },

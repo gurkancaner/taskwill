@@ -57,6 +57,10 @@ Router.route('users/role/:role',{
     permission:"manageUsers",
     template: "users"
 });
+Router.route('users/level/:level',{
+    permission:"manageUsers",
+    template: "users"
+});
 //--------------auth end--------------
 
 //----------------task start--------------
@@ -68,10 +72,7 @@ Router.route('tasks/:id',{
 //----------------task end--------------
 
 //----------------settings start--------------
-Router.route('settings/tags',{
-    template: "tags",
-    name:"tags"
-});
+Router.route('tags');
 
 //----------------settings end--------------
 
