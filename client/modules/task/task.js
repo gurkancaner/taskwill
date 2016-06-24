@@ -6,12 +6,19 @@ Template.tasks.onRendered(function () {
     selectMonths: true, // Creates a dropdown to control month
     selectYears: 15 // Creates a dropdown of 15 years to control year
   });
+  $('select').material_select();
   audio = document.getElementById("audio");
 });
 
 Template.tasks.helpers({
   Tasks: function () {
-    return Tasks.find({}, {
+    var filter = {status:"open"};
+    if (Router.current().params.status) {
+      filter.status =  Router.current().params.status;
+    } else if (Router.current().params.level) {
+      filter.level = Router.current().params.level;
+    }
+    return Tasks.find(filter, {
       sort: {
         createdAt: -1
       }
@@ -42,21 +49,36 @@ Template.tasks.helpers({
   },
   Levels: function(){
     return _.range(0, +Meteor.user().level + 1);
+  },
+  isViewingOpenTasks: function(){
+    return Router.current().params.status == undefined || Router.current().params.status == "open";
+  },
+  getStatusTitle: function(){
+    switch(Router.current().params.status){
+      case undefined:
+      case "open":
+        return "Open";
+      case "rejected":
+        return "Rejected";
+      case "waiting":
+        return "Incoming Requests"
+    }
   }
 });
 
 Template.tasks.events({
-  "submit #add-task-form": function (event, target) {
+  "click  :input.submit ": function (event, target) {
     event.preventDefault();
-    var id = target.find("#id").value;
-    var title = target.find("#title").value;
-    var hours = target.find("#hours").value;
-    var description = target.find("#description").value;
-    var duedate = target.find("#duedate").value;
-    var tags = $(target.find("#tags")).val();
-    var level = $(target.find("#level")).val();
+    var id = $("#add-task #id").val();
+    var title = $("#add-task #title").val();
+    var hours = $("#add-task #hours").val();
+    var description = $("#add-task #description").val();
+    var duedate = $("#add-task #duedate").val();
+    var tags = $("#add-task #tags").val();
+    var level = $("#add-task #level").val();
+    var status = $(event.target).prop("id");
     if (id) {
-      Meteor.call("updateTask", id, title, description, hours, duedate, tags, level, function (error, result) {
+      Meteor.call("updateTask", id, title, description, hours, duedate, tags, level, status, function (error, result) {
         if (error)
           console.log(error);
       });
@@ -68,13 +90,12 @@ Template.tasks.events({
     }
 
     //clear form
-    $('#add-task #permissions').val("");
-    $('#add-task #title').val("");
-    $('#add-task #hours').val("");
-    $('#add-task #description').val("");
-    $('#add-task #duedate').val("");
-    $('#add-task #tags').val("");//set permissions
-    $('select').material_select();//update select box
+     $('#add-task .elem').val("");
+    $('select').material_select();
+  },
+  'click .task-add': function (event, target) {
+    $('#add-task .elem').val("");
+    $('select').material_select();
   },
   'click .manage-content': function (event, target) {
     $('#add-task #id').val(this._id);
@@ -83,9 +104,9 @@ Template.tasks.events({
     $('#add-task #description').val(this.description);
     $('#add-task #hours').val(this.hours);
     if(this.tags)
-      $('#add-task #tags').val(this.tags);//set permissions
+      $('#add-task #tags').val(_.pluck(this.tags,"_id"));
     else
-      $('#add-task #tags').val("");//set permissions
+      $('#add-task #tags').val("");
     $('#add-task #level').val(this.level);
     $('select').material_select();//update select box
     $('#add-task').openModal();

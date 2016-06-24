@@ -3,16 +3,16 @@
  */
 Meteor.publish('tasks', function () {
   var level = 0;
-  if(this.userId){
-    if(Role.userCan("manageTasks", this.userId)){
-      return Tasks.find();   
-    }else{
+  if (this.userId) {
+    if (Role.userCan("manageTasks", this.userId)) {
+      return Tasks.find();
+    } else {
       var user = Meteor.users.findOne(this.userId);
-      if(user)
+      if (user)
         level = user.level;
     }
   }
-  return Tasks.find({level:{$lte: level}});
+  return Tasks.find({ level: { $lte: level }, status: "open" });
 });
 
 Meteor.methods({
@@ -20,11 +20,11 @@ Meteor.methods({
   "createTask": function (title, description, hours, dueDate, tags, level) {
     Meteor.checkUserCan("createTask");
     if (Meteor.userCan("manageTasks")) {
-      if(!level)
+      if (!level)
         level = 0;
-    }else
+    } else
       level = 0;
-    
+
     Tasks.insert({
       title: title,
       description: description,
@@ -33,10 +33,11 @@ Meteor.methods({
       createdBy: Meteor.userId(),
       createdAt: new Date(),
       tags: tags,
-      level:level
+      level: level,
+      status: "waiting"//waiting, open, assigned, done, rejected
     });
   },
-  "updateTask": function (id, title, description, hours, dueDate, tags, level) {
+  "updateTask": function (id, title, description, hours, dueDate, tags, level, status) {
     var selector = { _id: id, createdBy: Meteor.userId() };
     var valuesObj = {
       title: title,
@@ -50,8 +51,17 @@ Meteor.methods({
     if (Meteor.userCan("manageTasks")) {
       selector = { _id: id }
       valuesObj.level = Number(level);
+      if(status)
+        valuesObj.status = status;
     }
-    Tasks.update(selector, valuesObj);
+    Tasks.update(selector, {$set:valuesObj});
+  },
+  "updateTaskStatus": function (id, status) {
+    if(status == "rejected"){
+      if (Meteor.userCan("manageTasks")) {
+        Tasks.update(id, {$set:{status:"rejected"}});
+      }
+    }
   },
   "deleteTask": function (id) {
     var selector = { _id: id, createdBy: Meteor.userId() };

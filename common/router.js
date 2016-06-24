@@ -65,8 +65,8 @@ Router.route('users/level/:level',{
 
 //----------------task start--------------
 Router.route('tasks');
-Router.route('tasks/:id',{
-    template: "taskView"
+Router.route('tasks/:status',{
+    template: "tasks"
 });
 
 //----------------task end--------------

@@ -22,8 +22,13 @@
         </div>
       </li>
       <li class="bold {{isActive 'tasks'}}"><a href="{{pathFor "tasks"}}" class="waves-effect waves-green"><i
-                    class="mdi-navigation-check"></i> {{_ "Tasks"}}<span class="new badge">{{TaskCount}}</span></a>
+                    class="mdi-navigation-check"></i> {{_ "Tasks"}}<span class="new badge grey lighten-1">{{TaskCount}}</span></a>
       </li>
+      {{#if userCan "manageTasks"}}
+      <li class="bold {{isActive 'tasks'}}"><a href="{{pathFor 'tasks/:status' status='waiting'}}" class="waves-effect waves-green"><i
+                    class="mdi-content-mail"></i> {{_ "Requests"}}<span class="new badge">{{RequestCount}}</span></a>
+      </li>
+      {{/if}}
       
       {{#if userCan "changeSettings"}}
       <li class="no-padding">

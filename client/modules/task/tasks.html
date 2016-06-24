@@ -5,10 +5,12 @@
             <ul id="task-card2" class="collection with-header">
                   <li class="collection-header green white-text">
                       <h4 class="task-card-title">{{_ "Tasks"}}</h4>
-                      <p class="task-card-date">March 26, 2015</p>
+                      <p class="task-card-date">{{_ getStatusTitle}}</p>
                   </li>
                   {{#if userCan "createTask"}}
+                  {{#if isViewingOpenTasks}}
                     <a href="#add-task" class="task-add modal-trigger btn-floating waves-effect waves-light"><i class="mdi-content-add"></i></a>
+                  {{/if}}
                   {{/if}}
                   {{#each Tasks}}
                   <li class="collection-item avatar">
@@ -19,9 +21,16 @@
                             <span class="task-cat" style="background-color: {{color}}">{{name}}</span>
                         {{/each}}
                         </p>
+                        {{#if userCan "manageTasks"}}
                         <a class="manage-content" href="#"><i class="material-icons right">mode_edit</i></a>
-                      <a href="#" id="{{volunteerStatus volunteers}}" class="secondary-content"><span class="ultra-small">{{dueDate}}</span>
+                        {{/if}}
+                        {{#if isViewingOpenTasks}}
+                        <a href="#" id="{{volunteerStatus volunteers}}" class="secondary-content"><span class="ultra-small">{{dueDate}}</span>
                       <i class="material-icons">{{volunteerStatus volunteers}}</i></a>
+                      {{else}}
+                      <a href="#" class="secondary-content"><span class="ultra-small">{{dueDate}}</span></a>
+                    {{/if}}
+                      
                   </li>
                   {{/each}}
               </ul>
@@ -39,32 +48,32 @@
                         <form id="add-task-form" class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
-                            <input id="id" type="hidden">
-                            <input id="title" type="text">
+                            <input id="id" type="hidden" class="elem">
+                            <input id="title" type="text" class="elem">
                             <label class="active" for="name">{{_ "Title"}}</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                            <input id="hours" type="text">
+                            <input id="hours" type="text" class="elem">
                             <label class="active" for="hours">{{_ "Hours"}}</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                            <input id="duedate" type="date" class="datepicker">
+                            <input id="duedate" type="date" class="datepicker elem">
                             <label class="active" for="duedate">{{_ "Due Date"}}</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                            <textarea id="description" class="materialize-textarea" length="120"></textarea>
+                            <textarea id="description" class="elem materialize-textarea" length="120"></textarea>
                             <label class="active" for="duedate">{{_ "Description"}}</label>
                             </div>
                         </div>
                         <div class="row">
                           <div class="input-field col s12">
-                            <select id="tags" multiple>
+                            <select id="tags" multiple class="elem">
                             <option value="" disabled selected>{{_ "Select tags"}}</option>
                             {{#each Tags}}
                             <option value="{{_id}}"><span class="tag-color-view" style="background-color:{{color}};"></span>{{name}}</option>
@@ -75,7 +84,7 @@
                         </div>
                         {{#if userCan "manageTasks"}}
                         <div class="row">
-                          <div class="input-field col s12">
+                          <div class="input-field col s12 elem">
                             <select id="level">
                             <option value="" disabled selected>{{_ "Select level"}}</option>
                             {{#each Levels}}
@@ -87,13 +96,27 @@
                         </div>
                         {{/if}}
                         
-                            <div class="row">
+                        <div class="row">
+                            {{#if isViewingOpenTasks}}
                             <div class="input-field col s12">
-                                <button class="btn cyan waves-effect waves-light right modal-close" type="submit" name="action">Submit
+                                <button class="submit btn cyan waves-effect waves-light right modal-close" type="submit" name="action">Submit
                                 <i class="mdi-content-send right"></i>
                                 </button>
                             </div>
+                            {{else}}
+                            <div class="input-field col s6">
+                                <button id="rejected" class="submit btn red waves-effect waves-light right modal-close" name="action">Reject
+                                <i class="mdi-content-block right"></i>
+                                </button>
                             </div>
+                            <div class="input-field col s6">
+                                <button id="open" class="submit btn green waves-effect waves-light right modal-close"  name="action">Approve
+                                <i class="mdi-action-done right"></i>
+                                </button>
+                            </div>
+                            
+                            {{/if}}
+                        </div>
                         </form>
                     </div>
                     </div>
