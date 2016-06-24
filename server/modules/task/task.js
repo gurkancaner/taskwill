@@ -17,7 +17,7 @@ Meteor.publish('tasks', function () {
 
 Meteor.methods({
   //creates or updates role
-  "createTask": function (title, description, hours, dueDate, tags, level) {
+  "createTask": function (title, description, hours, dueDate, tags, level, location) {
     Meteor.checkUserCan("createTask");
     if (Meteor.userCan("manageTasks")) {
       if (!level)
@@ -34,10 +34,11 @@ Meteor.methods({
       createdAt: new Date(),
       tags: tags,
       level: level,
+      location: location,
       status: "waiting"//waiting, open, assigned, done, rejected
     });
   },
-  "updateTask": function (id, title, description, hours, dueDate, tags, level, status) {
+  "updateTask": function (id, title, description, hours, dueDate, tags, level, status, location) {
     var selector = { _id: id, createdBy: Meteor.userId() };
     var valuesObj = {
       title: title,
@@ -47,6 +48,7 @@ Meteor.methods({
       updatedBy: Meteor.userId(),
       updatedAt: new Date(),
       tags: tags,
+      location:location
     };
     if (Meteor.userCan("manageTasks")) {
       selector = { _id: id }

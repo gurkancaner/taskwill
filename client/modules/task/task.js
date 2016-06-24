@@ -12,9 +12,9 @@ Template.tasks.onRendered(function () {
 
 Template.tasks.helpers({
   Tasks: function () {
-    var filter = {status:"open"};
+    var filter = { status: "open" };
     if (Router.current().params.status) {
-      filter.status =  Router.current().params.status;
+      filter.status = Router.current().params.status;
     } else if (Router.current().params.level) {
       filter.level = Router.current().params.level;
     }
@@ -22,16 +22,16 @@ Template.tasks.helpers({
       sort: {
         createdAt: -1
       }
-    }).map(function(doc){
-      if(doc.tags){
-      var tags = doc.tags.map(function(tagId){
-        return Tags.findOne(tagId);
-      });
-      return _.extend(doc,{
-                tags:tags
-            });
+    }).map(function (doc) {
+      if (doc.tags) {
+        var tags = doc.tags.map(function (tagId) {
+          return Tags.findOne(tagId);
+        });
+        return _.extend(doc, {
+          tags: tags
+        });
       }
-      return doc;      
+      return doc;
     });
   },
   volunteerStatus: function (volunteers) {
@@ -40,21 +40,21 @@ Template.tasks.helpers({
     else
       return "favorite_border";
   },
-  Tags: function (){
-    return Tags.find({},{
-      sort:{
-        name:1
+  Tags: function () {
+    return Tags.find({}, {
+      sort: {
+        name: 1
       }
     });
   },
-  Levels: function(){
+  Levels: function () {
     return _.range(0, +Meteor.user().level + 1);
   },
-  isViewingOpenTasks: function(){
+  isViewingOpenTasks: function () {
     return Router.current().params.status == undefined || Router.current().params.status == "open";
   },
-  getStatusTitle: function(){
-    switch(Router.current().params.status){
+  getStatusTitle: function () {
+    switch (Router.current().params.status) {
       case undefined:
       case "open":
         return "Open";
@@ -77,25 +77,33 @@ Template.tasks.events({
     var tags = $("#add-task #tags").val();
     var level = $("#add-task #level").val();
     var status = $(event.target).prop("id");
+    var location = $('#add-task #is-local').prop("checked") ? $('#add-task #location').val() : "";
     if (id) {
-      Meteor.call("updateTask", id, title, description, hours, duedate, tags, level, status, function (error, result) {
+      Meteor.call("updateTask", id, title, description, hours, duedate, tags, level, status, location, function (error, result) {
         if (error)
           console.log(error);
       });
     } else {
-      Meteor.call("createTask", title, description, hours, duedate, tags, level, function (error, result) {
+      Meteor.call("createTask", title, description, hours, duedate, tags, level, location, function (error, result) {
         if (error)
           console.log(error);
       });
     }
 
     //clear form
-     $('#add-task .elem').val("");
+    $('#add-task .elem').val("");
     $('select').material_select();
+    $('#add-task #is-local').prop("checked", false);
+    $('#location-wrapper').hide();
   },
   'click .task-add': function (event, target) {
     $('#add-task .elem').val("");
+    $('#add-task #is-local').prop("checked", false);
+    $('#location-wrapper').hide();
     $('select').material_select();
+  },
+  'click #is-local': function (event, target) {
+    $('#location-wrapper').toggle($(event.target).prop("checked"))
   },
   'click .manage-content': function (event, target) {
     $('#add-task #id').val(this._id);
@@ -103,11 +111,15 @@ Template.tasks.events({
     $('#add-task #duedate').val(this.dueDate);
     $('#add-task #description').val(this.description);
     $('#add-task #hours').val(this.hours);
-    if(this.tags)
-      $('#add-task #tags').val(_.pluck(this.tags,"_id"));
+    if (this.tags)
+      $('#add-task #tags').val(_.pluck(this.tags, "_id"));
     else
       $('#add-task #tags').val("");
     $('#add-task #level').val(this.level);
+    $('#add-task #is-local').prop("checked", this.location);
+    $('#location-wrapper').toggle(Boolean(this.location));
+    $('#add-task #location').val(this.location);
+
     $('select').material_select();//update select box
     $('#add-task').openModal();
   },

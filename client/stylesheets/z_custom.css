@@ -83,3 +83,7 @@ span.badge.new:after {
   padding-left:20px;
   margin-right:5px;
 }
+.location{
+  position:absolute;
+  right:45px;
+}

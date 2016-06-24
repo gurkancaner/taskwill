@@ -17,6 +17,9 @@
                       <i class="material-icons circle green">insert_chart</i>
                       <span class="title"><a id="view-task-button" href="#task-view" class="modal-trigger">{{title}}</a></span>
                         <p class="task-description truncate">{{description}} <br>
+                        {{#if location}}
+                        <span class="location"><i class="mdi-communication-location-on"></i>{{location}}</span>
+                        {{/if}}
                         {{#each tags}}
                             <span class="task-cat" style="background-color: {{color}}">{{name}}</span>
                         {{/each}}
@@ -54,15 +57,27 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
+                            <div class="input-field col s6">
                             <input id="hours" type="text" class="elem">
                             <label class="active" for="hours">{{_ "Hours"}}</label>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
+                            <div class="input-field col s6">
                             <input id="duedate" type="date" class="datepicker elem">
                             <label class="active" for="duedate">{{_ "Due Date"}}</label>
+                            </div>
+                        </div>
+                        <div class="row" style="height:72px">
+                            <div class="col s6 switch">
+                                <label>
+                                {{_ "Remote"}}
+                                <input id="is-local" class="elem" type="checkbox">
+                                <span class="lever"></span>
+                                {{_ "Local"}}
+                                </label>
+                            </div>
+                            <div id="location-wrapper" class="input-field col s6" style="display:none">
+                            <input id="location" type="text" class="elem">
+                            <label class="active" for="location">{{_ "Location"}}</label>
                             </div>
                         </div>
                         <div class="row">
