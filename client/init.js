@@ -2,12 +2,26 @@ Deps.autorun(function() {
     Meteor.subscribe("tasks");
     Meteor.subscribe("tags");
     Meteor.subscribe("userData");
+    Meteor.subscribe("notifications");
 });
 
 
 
 Meteor.startup(function() {
-  TAPi18n.setLanguage(getUserLanguage());
+    TAPi18n.setLanguage(getUserLanguage())
+      .done(function() {
+        var currentLanguage = Session.get("userLanguage");
+        if(currentLanguage != null){
+          moment.locale(currentLanguage);
+        }
+        else{
+          moment.locale(getUserLanguage()); //this value should be set according to user preferred language
+        }
+      })
+      .fail(function(error_message) {
+        // Handle the situation
+        console.log(error_message);
+      });
   
 });
 Template.sideNav.onRendered(function() {
@@ -81,12 +95,23 @@ Template.sideNav.onRendered(function() {
       gutter: 0, // Spacing from edge
       belowOrigin: true // Displays dropdown below the button
     });
+    // Translation Dropdown
+  $('.translation-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrain_width: false, // Does not change width of dropdown to that of the activator
+      hover: true, // Activate on hover
+      gutter: 0, // Spacing from edge
+      belowOrigin: true, // Displays dropdown below the button
+      alignment: 'left' // Displays dropdown with edge aligned to the left of button
+    }
+  );
     $('.notification-button').dropdown({
       inDuration: 300,
       outDuration: 125,
-      constrain_width: true, // Does not change width of dropdown to that of the activator
+      constrain_width: false, // Does not change width of dropdown to that of the activator
       hover: true, // Activate on hover
-      alignment: 'right', // Aligns dropdown to left or right edge (works with constrain_width)
+      alignment: 'left', // Aligns dropdown to left or right edge (works with constrain_width)
       gutter: 0, // Spacing from edge
       belowOrigin: true // Displays dropdown below the button
     });

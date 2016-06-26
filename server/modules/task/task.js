@@ -53,10 +53,16 @@ Meteor.methods({
     if (Meteor.userCan("manageTasks")) {
       selector = { _id: id }
       valuesObj.level = Number(level);
-      if(status)
+      if(status){
         valuesObj.status = status;
+      }
     }
-    Tasks.update(selector, {$set:valuesObj});
+    Tasks.update(selector, {$set:valuesObj},function(error, result){
+      if(!error){
+        if(Meteor.userCan("manageTasks") && status == "open")
+          Notification.send("openTask", id);
+      }
+    });
   },
   "updateTaskStatus": function (id, status) {
     if(status == "rejected"){

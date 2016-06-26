@@ -1,6 +1,5 @@
 Router.configure({
-  // we use the  master template to define the layout for the entire app
-  layoutTemplate: 'masterPublic',
+
 
   // the notFound template is used for unknown routes and missing lists
   notFoundTemplate: 'notFound',
@@ -62,6 +61,15 @@ Router.route('users/level/:level',{
     template: "users"
 });
 //--------------auth end--------------
+
+//----------------user start------------
+Router.route('user/profile',{
+  template:"profile",
+  data: function() {
+    return Meteor.user();
+  }
+});
+//----------------user end--------------
 
 //----------------task start--------------
 Router.route('tasks');

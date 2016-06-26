@@ -1,0 +1,75 @@
+<template name="profile">
+    <h4>{{_ "Profile"}}</h4>
+<form id="profile-form">
+<div class="row">
+    <div class="col s12 m6 l6">
+        <div class="card-panel">
+            <h4 class="header">{{_ "PERSONAL INFORMATION"}}</h4>
+            <div class="row">
+                <div id="" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <input id="id" type="hidden" class="elem">
+                        <input id="name" type="text" class="elem" value="{{profile.name}}">
+                        <label class="active" for="name">{{_ "Name"}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <input id="phone" type="text" class="elem" value="{{profile.phone}}">
+                        <label class="active" for="phone">{{_ "Phone"}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <textarea id="about" class="elem materialize-textarea" length="120">{{profile.about}}</textarea>
+                        <label class="active" for="about">{{_ "About Yourself"}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button class="submit btn-floating btn-large btn-flat cyan waves-effect waves-light right modal-close" type="submit" name="action">
+                            <i class="mdi-content-save right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m6 l6">
+        <div class="card-panel">
+            <h4 class="header">{{_ "PREFERENCES"}}</h4>
+            <div class="row">
+                <div id="" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <input id="location" type="text" class="elem" value="{{profile.location}}">
+                        <label class="active" for="location">{{_ "Location"}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <select id="tags" multiple class="elem">
+                        <option value="" disabled selected>{{_ "Select tags"}}</option>
+                        {{#each Tags}}
+                        <option value="{{_id}}"><span class="tag-color-view" style="background-color:{{color}};"></span>{{name}}</option>
+                        {{/each}}
+                        </select>
+                        <label>{{_ "Interested Tags"}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button class="submit btn-floating btn-large btn-flat cyan waves-effect waves-light right modal-close" type="submit" name="action">
+                            <i class="mdi-content-save right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+</template>

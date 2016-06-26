@@ -177,7 +177,7 @@ Template.tasks.events({
       if (error)
         console.log(error);
       else
-        Materialize.toast('Gönüllü oldunuz :)', 4000)
+        Materialize.toast('Gönüllü oldunuz :)', 4000);
     });
     return false;
   },
