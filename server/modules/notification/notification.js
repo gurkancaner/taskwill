@@ -19,6 +19,7 @@ Meteor.methods({
 });
 
 
+
 /**
  * userId
  * actor
@@ -61,7 +62,13 @@ Notification = {
                 read: false,
                 createdAt: new Date()
             });
-            
+        var checkPoint = Math.floor((1 + Math.random()) * 10);
+        if(checkPoint == 5|| true){//delete last more than 10 notification
+            //find last 10 notifications
+            //var ids= Notifications.find({},{_id:1, sort:{createdAt:-1}, skip:2}).map(function(doc){return doc._id});
+            //delete all but last 10
+            //Notifications.remove({$nin:{_id:ids}},{sort:{createdAt:-1}, skip:2});
+        }     
 
     }
 }
