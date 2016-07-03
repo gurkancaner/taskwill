@@ -1,5 +1,8 @@
 {
   "Login": "Giriş",
-  "Email":"Eposta",
-  "level_number": "Düzey %s"
+  "Email": "Eposta",
+  "level_number": "Düzey %s",
+  "Tasks": "İşler",
+  "Requests": "Talepler",
+  "Settings": "Ayarlar"
 }

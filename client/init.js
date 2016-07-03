@@ -1,30 +1,20 @@
-Deps.autorun(function() {
-    Meteor.subscribe("tasks");
-    Meteor.subscribe("tags");
-    Meteor.subscribe("userData");
-    Meteor.subscribe("notifications");
-});
-
-
-
-Meteor.startup(function() {
+Deps.autorun(function () {
+  Meteor.subscribe("tasks");
+  Meteor.subscribe("tags");
+  Meteor.subscribe("userData", function () {
     TAPi18n.setLanguage(getUserLanguage())
-      .done(function() {
-        var currentLanguage = Session.get("userLanguage");
-        if(currentLanguage != null){
-          moment.locale(currentLanguage);
-        }
-        else{
-          moment.locale(getUserLanguage()); //this value should be set according to user preferred language
-        }
-      })
-      .fail(function(error_message) {
-        // Handle the situation
-        console.log(error_message);
+      .done(function () {
+        moment.locale(getUserLanguage());
       });
-  
+  });
+  Meteor.subscribe("notifications");
 });
-Template.sideNav.onRendered(function() {
+
+
+
+Meteor.startup(function () {
+});
+Template.sideNav.onRendered(function () {
 
 
   /*================================================================================
@@ -34,15 +24,15 @@ Template.sideNav.onRendered(function() {
    Author URL: http://www.themeforest.net/user/geekslabs
    ================================================================================*/
 
-  this.$(function() {
+  this.$(function () {
 
     "use strict";
 
     var window_width = $(window).width();
 
     /*Preloader*/
-    $(window).load(function() {
-      setTimeout(function() {
+    $(window).load(function () {
+      setTimeout(function () {
         $('body').addClass('loaded');
       }, 200);
     });
@@ -50,20 +40,20 @@ Template.sideNav.onRendered(function() {
 
     // Search class for focus
     $('.header-search-input').focus(
-      function() {
+      function () {
         $(this).parent('div').addClass('header-search-wrapper-focus');
       }).blur(
-      function() {
+      function () {
         $(this).parent('div').removeClass('header-search-wrapper-focus');
       });
 
     // Check first if any of the task is checked
-    $('#task-card input:checkbox').each(function() {
+    $('#task-card input:checkbox').each(function () {
       checkbox_check(this);
     });
 
     // Task check box
-    $('#task-card input:checkbox').change(function() {
+    $('#task-card input:checkbox').change(function () {
       checkbox_check(this);
     });
 
@@ -96,7 +86,7 @@ Template.sideNav.onRendered(function() {
       belowOrigin: true // Displays dropdown below the button
     });
     // Translation Dropdown
-  $('.translation-button').dropdown({
+    $('.translation-button').dropdown({
       inDuration: 300,
       outDuration: 225,
       constrain_width: false, // Does not change width of dropdown to that of the activator
@@ -105,7 +95,7 @@ Template.sideNav.onRendered(function() {
       belowOrigin: true, // Displays dropdown below the button
       alignment: 'left' // Displays dropdown with edge aligned to the left of button
     }
-  );
+    );
     $('.notification-button').dropdown({
       inDuration: 300,
       outDuration: 125,
@@ -144,7 +134,7 @@ Template.sideNav.onRendered(function() {
     $('.menu-sidebar-collapse').sideNav({
       menuWidth: 240,
       edge: 'left', // Choose the horizontal origin
-    //defaultOpen:true // Set if default menu open is true
+      //defaultOpen:true // Set if default menu open is true
     });
     // HORIZONTAL MENU (Layout 03)
     $('.dropdown-menu').dropdown({
@@ -162,7 +152,7 @@ Template.sideNav.onRendered(function() {
       menuWidth: 400,
       edge: 'right',
     });
-    $('.chat-close-collapse').click(function() {
+    $('.chat-close-collapse').click(function () {
       $('.chat-collapse').sideNav('hide');
     });
     $('.chat-collapsible').collapsible({
@@ -210,7 +200,7 @@ Template.sideNav.onRendered(function() {
       }
     }
 
-    $('.toggle-fullscreen').click(function() {
+    $('.toggle-fullscreen').click(function () {
       toggleFullScreen();
     });
 
@@ -232,15 +222,15 @@ Template.sideNav.onRendered(function() {
 
     // Toggle Flow Text
     var toggleFlowTextButton = $('#flow-toggle')
-    toggleFlowTextButton.click(function() {
-      $('#flow-text-demo').children('p').each(function() {
+    toggleFlowTextButton.click(function () {
+      $('#flow-text-demo').children('p').each(function () {
         $(this).toggleClass('flow-text');
       })
     });
     //Toggle Containers on page
     var toggleContainersButton = $('#container-toggle-button');
-    toggleContainersButton.click(function() {
-      $('body .browser-window .container, .had-container').each(function() {
+    toggleContainersButton.click(function () {
+      $('body .browser-window .container, .had-container').each(function () {
         $(this).toggleClass('had-container');
         $(this).toggleClass('container');
         if ($(this).hasClass('container')) {

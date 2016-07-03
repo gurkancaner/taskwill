@@ -9,18 +9,41 @@ Template.headerNav.helpers({
     });
   },
   NotificationCount: function () {
-    return Notifications.find().count();
+    return Notifications.find({read:false}).count();
   },
   getNotificationIcon: function () {
     return "mdi-action-stars";
+  },
+  getNotificationStatus: function (read) {
+    return read ? "grey-text" : "";
+  },
+  getFlag: function () {
+    switch (Session.get("userLanguage")) {
+      case "tr":
+        return "Turkey";
+      case "en":
+        return "United-States";
+      default:
+        break;
+    }
   }
 });
 
 Template.headerNav.events({
-  'click "#translation-dropdown a"': function (event, template) {
-    var lang = $(event.target).data("lang");
-    Session.set("userLanguage", lang);
+  'click .change-language-button': function (event, template) {
+    var lang = $(event.currentTarget).data("lang");
     Meteor.call("updateUserSettings", "profile.language", lang, function (error, result) {
+      if (error) {
+        console.log("error", error);
+      } else {
+        Session.set("userLanguage", lang);
+        moment.locale(lang);
+        TAPi18n.setLanguage(lang);
+      }
+    });
+  },
+  'click #mark-as-read': function (event, template) {
+    Meteor.call("markNotificationsAsRead", function (error, result) {
       if (error) {
         console.log("error", error);
       }

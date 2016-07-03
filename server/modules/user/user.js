@@ -13,12 +13,12 @@ Meteor.methods({
         });
   },
   "updateUserSettings": function (key, value) {
+    var setPair ={};
+    setPair[key] = value;
       Meteor.users.update({
         _id: Meteor.userId(),
       }, {
-          $set: {
-            key:value
-          }
+          $set: setPair
         });
   }
 });

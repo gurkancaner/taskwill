@@ -6,6 +6,11 @@ Accounts.onCreateUser(function (options, user) {
     user.roles = [roleId];
   }
   user.level = 1;//visitors level is 0, every registered users' level is 1 initially
+  if (Meteor.users.find().count() == 0){//if this is first user, make it manager
+    user.roles.push(Meteor.roles.findOne({ name: "Manager" })._id);
+    user.level = 10;
+  }
+  
   if (options.profile)
     user.profile = options.profile;
   return user;

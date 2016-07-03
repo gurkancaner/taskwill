@@ -2,10 +2,7 @@
  * Returns users language
  * @returns {string} language short string of user
  */
-getUserLanguage = function() {
-  if (Session.get("userLanguage")) { //check session object
-    return Session.get("userLanguage");
-  }
+getUserLanguage = function () {
   if (Meteor.user() && Meteor.user().profile.language != undefined) { //check db
     Session.set("userLanguage", Meteor.user().profile.language);
     return Meteor.user().profile.language;
@@ -16,7 +13,7 @@ getUserLanguage = function() {
       locale = 'tr';
     }
     Session.set("userLanguage", locale);
-    Meteor.call("updateUserSettings", "profile.language", locale, function(error, result) {
+    Meteor.call("updateUserSettings", "profile.language", locale, function (error, result) {
       if (error) {
         console.log("error", error);
       }
@@ -31,4 +28,9 @@ Template.registerHelper('isActive', function (route) {
 
 Template.registerHelper('equals', function (arg1, arg2) {
   return arg1 === arg2;
+});
+
+Template.registerHelper('formatDate', function (date) {
+  moment.locale(Session.get("userLanguage"));
+  return moment(date).calendar();
 });
