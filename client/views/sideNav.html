@@ -24,30 +24,39 @@
           </div>
         </div>
       </li>
-      <li class="bold {{isActive 'tasks'}}"><a href="{{pathFor "tasks"}}" class="waves-effect waves-green"><i
-                    class="mdi-navigation-check"></i> {{_ "Tasks"}}<span class="new badge grey lighten-1">{{TaskCount}}</span></a>
+      <li class="bold {{isActive '/tasks'}}"><a href="{{pathFor "tasks"}}" class="waves-effect waves-green"><i
+                    class="mdi-image-panorama-fisheye"></i> {{_ "Tasks"}}<span class="new badge grey lighten-1">{{TaskCount}}</span></a>
       </li>
       {{#if userCan "manageTasks"}}
-      <li class="bold {{isActive 'tasks'}}"><a href="{{pathFor 'tasks/:status' status='waiting'}}" class="waves-effect waves-green"><i
-                    class="mdi-content-mail"></i> {{_ "Requests"}}<span class="new badge">{{RequestCount}}</span></a>
+      <li class="bold {{isActive '/tasks/waiting'}}"><a href="{{pathFor 'tasks/:status' status='waiting'}}" class="waves-effect waves-green"><i
+                    class="mdi-communication-call-received"></i> {{_ "Incoming Requests"}}<span class="new badge">{{RequestCount}}</span></a>
+      </li>
+      {{/if}}
+      {{#if userCan "createTask"}}
+      <li class="bold {{isActive '/mytasks/requests'}}"><a href="{{pathFor 'mytasks/:type' type='requests'}}" class="waves-effect waves-green"><i
+                    class="mdi-communication-call-made"></i> {{_ "My Requests"}}<span class="new badge">{{MyRequestCount}}</span></a>
+      </li>
+      {{/if}}
+      {{#if userCan "volunteerForTask"}}
+      <li class="bold {{isActive '/mytasks/tasks'}}"><a href="{{pathFor 'mytasks/:type' type='tasks'}}" class="waves-effect waves-green"><i
+                    class="mdi-maps-my-location"></i> {{_ "My Tasks"}}<span class="new badge">{{MyTaskCount}}</span></a>
       </li>
       {{/if}}
       
       {{#if userCan "changeSettings"}}
       <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
-              <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-settings"></i> Settings</a>
+              <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-settings"></i> {{_ "Settings"}}</a>
                   <div class="collapsible-body">
                       <ul>
-                        <li class="{{isActive 'users'}}"><a href="{{pathFor 'users'}}" >Users</a>
+                        <li class="{{isActive 'users'}}"><a href="{{pathFor 'users'}}" >{{_ "Users"}}</a>
                         </li>
                         {{#if userCan "manageRoles"}}
-                        <li class="bold {{isActive 'roles'}}"><a href="{{pathFor "roles"}}" class="waves-effect waves-green">Roles</a>
+                        <li class="bold {{isActive 'roles'}}"><a href="{{pathFor "roles"}}" class="waves-effect waves-green">{{_ "Roles"}}</a>
                         </li>
                         {{/if}}
-                          <li class="{{isActive 'tags'}}"><a href="{{pathFor 'tags'}}" >Tags</a>
+                          <li class="{{isActive 'tags'}}"><a href="{{pathFor 'tags'}}" >{{_ "Tags"}}</a>
                           </li>
-                          
                       </ul>
                   </div>
               </li>

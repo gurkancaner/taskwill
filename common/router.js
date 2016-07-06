@@ -76,6 +76,9 @@ Router.route('tasks');
 Router.route('tasks/:status',{
     template: "tasks"
 });
+Router.route('mytasks/:type',{
+    template: "tasks"
+});
 
 //----------------task end--------------
 

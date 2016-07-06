@@ -23,7 +23,7 @@ getUserLanguage = function () {
 };
 
 Template.registerHelper('isActive', function (route) {
-  return Router.current().route.getName().indexOf(route) !== -1 ? "active" : "";
+  return Router.current().url == route ? "active" : "";
 });
 
 Template.registerHelper('equals', function (arg1, arg2) {

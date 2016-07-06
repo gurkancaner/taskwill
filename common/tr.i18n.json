@@ -3,6 +3,9 @@
   "Email": "Eposta",
   "level_number": "Düzey %s",
   "Tasks": "İşler",
-  "Requests": "Talepler",
-  "Settings": "Ayarlar"
+  "Incoming Requests": "Gelen Talepler",
+  "Settings": "Ayarlar",
+  "My Tasks": "Görevlerim",
+  "My Requests": "Taleplerim",
+  "Waiting Tasks": "Bekleyen İşler"
 }

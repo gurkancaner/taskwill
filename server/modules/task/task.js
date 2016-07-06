@@ -48,27 +48,46 @@ Meteor.methods({
       updatedBy: Meteor.userId(),
       updatedAt: new Date(),
       tags: tags,
-      location:location
+      location: location
     };
     if (Meteor.userCan("manageTasks")) {
       selector = { _id: id }
       valuesObj.level = Number(level);
-      if(status){
+      if (status) {
         valuesObj.status = status;
       }
     }
-    Tasks.update(selector, {$set:valuesObj},function(error, result){
-      if(!error){
-        if(Meteor.userCan("manageTasks") && status == "open")
+    Tasks.update(selector, { $set: valuesObj }, function (error, result) {
+      if (!error) {
+        if (Meteor.userCan("manageTasks") && status == "open")
           Notification.send("openTask", id);
       }
     });
   },
   "updateTaskStatus": function (id, status) {
-    if(status == "rejected"){
-      if (Meteor.userCan("manageTasks")) {
-        Tasks.update(id, {$set:{status:"rejected"}});
-      }
+    switch (status) {
+      case "open":
+        if (Meteor.userCan("manageTasks")) {
+          Tasks.update(id, { $set: { status: status } });
+        } else {
+          Tasks.update({ _id: id, createdBy: Meteor.userId(), status: "assigned" }, { $set: { status: status } })
+        }
+        break;
+      case "assigned":
+        if (Meteor.userCan("manageTasks")) {
+          Tasks.update(id, { $set: { status: status } });
+        } else {
+          Tasks.update({ _id: id, createdBy: Meteor.userId(), status: "open" }, { $set: { status: status } })
+        }
+        break;
+      case "rejected":
+        if (Meteor.userCan("manageTasks")) {
+          Tasks.update(id, { $set: { status: status } });
+        }
+        break;
+
+      default:
+        break;
     }
   },
   "deleteTask": function (id) {
@@ -100,5 +119,23 @@ Meteor.methods({
     }, {
         $pull: { volunteers: Meteor.userId() }
       });
-  }
+  },
+  "approveVolunteer": function (taskId, volunteerId, status) {
+    var selector = {
+      _id: taskId,
+      volunteers: volunteerId
+    };
+    var updateMethod;
+    if (status) {
+      updateMethod = { $addToSet: { approvedVolunteers: volunteerId } };
+    } else {
+      updateMethod = { $pull: { approvedVolunteers: volunteerId } };
+    }
+
+    if (!Meteor.userCan("manageTasks")) {
+      selector.createdBy = Meteor.userId();
+    }
+    Tasks.update(selector, updateMethod);
+    console.log(selector);
+  },
 });

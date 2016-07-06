@@ -1,0 +1,60 @@
+<template name="volunteers">
+<div class="card-content-bg white-text">
+    <div class="card-content">
+        <div id="description"></div>
+    </div>    
+    <div class="row" style="border-top: 1px solid rgba(160, 160, 160, 0.2); color:black; padding:20px">
+        <div class="col s12 m4 l3">
+            <h5 class="header">{{_ "Volunteers"}}</h5>
+        </div>
+        <div class="col s12 m12 l12">
+            <ul class="collapsible collapsible-accordion" data-collapsible="expandable">
+                {{#each Volunteers}}
+                <li>
+                    <div class="collapsible-header">
+                        {{#if isApproved}}
+                        <i class="mdi-toggle-check-box"></i>
+                        {{else}}
+                        <i class="mdi-toggle-check-box-outline-blank"></i>
+                        {{/if}}
+                        {{profile.name}} 
+                    </div>
+                    <div class="collapsible-body">
+                        <p>
+                        <div class="switch">
+                            {{_ "Approve"}} : 
+                            <label>
+                            <input class="volunteer-approve" type="checkbox" checked="{{isApproved}}">
+                            <span class="lever"></span>
+                            </label>
+                        </div>
+                        <br>
+                            <i class="mdi-av-equalizer"></i> {{_ "level_number" level}}<br><br>
+                            <i class="mdi-communication-location-on"></i> {{profile.location}}<br><br>
+                            <i class="mdi-action-perm-phone-msg"></i> {{profile.phone}}<br><br>
+                            <i class="mdi-maps-local-offer"></i> 
+                                {{#each profile.tags}}
+                                        <span class="task-cat" style="background-color: {{color}}">{{name}}</span>
+                                {{/each}}<br><br><br>
+                            {{profile.about}}
+                        </p>
+                    </div>
+                </li>
+                {{else}}
+                <li>
+                    {{_ "No volunteers yet."}}
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="card-action">
+        {{#if isAssigned}}
+            <a id="mark-as-open"  class="volunteer-action red-text" data-status="open" href="#"><i class="mdi-toggle-radio-button-on tiny"></i> {{_ "ASSIGNED"}}</a>
+        {{else}}
+            <a id="mark-as-assigned" class="volunteer-action red-text" data-status="assigned" href="#"><i class="mdi-image-panorama-fisheye tiny"></i> {{_ "MARK AS ASSIGNED"}}</a>
+        {{/if}}
+        <a class="modal-action modal-close right" href="#">Kapat</a>
+    </div>
+</div>
+</template>

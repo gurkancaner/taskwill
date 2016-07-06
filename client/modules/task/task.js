@@ -18,6 +18,22 @@ Template.tasks.helpers({
     } else if (Router.current().params.level) {
       filter.level = Router.current().params.level;
     }
+    if (filter.status == "waiting")
+      Session.set("title", "Incoming Requests");
+    else if (filter.status == "open")
+      Session.set("title", "Waiting Tasks");
+
+    switch (Router.current().params.type) {
+      case "tasks":
+        filter = { volunteers: Meteor.userId() };
+        Session.set("title", "My Tasks");
+        break;
+      case "requests":
+        filter = { createdBy: Meteor.userId() };
+        Session.set("title", "My Requests");
+      default:
+        break;
+    }
     return Tasks.find(filter, {
       sort: {
         createdAt: -1
@@ -53,17 +69,31 @@ Template.tasks.helpers({
   isViewingOpenTasks: function () {
     return Router.current().params.status == undefined || Router.current().params.status == "open";
   },
-  getStatusTitle: function () {
-    switch (Router.current().params.status) {
-      case undefined:
+  getTaskSubtitle: function () {
+    return Session.get("title");
+  },
+  getTaskIconClass: function (task) {
+    switch (task.status) {
       case "open":
-        return "Open";
-      case "rejected":
-        return "Rejected";
+        if (Session.get("title") == "My Requests" && task.volunteers) {
+          if (task.volunteers.length > 9)
+            return "mdi-image-filter-9-plus  blue-text";
+          return "mdi-image-filter-" + task.volunteers.length + "  blue-text";
+        }
+        return "mdi-image-panorama-fisheye amber-text";
       case "waiting":
-        return "Incoming Requests"
+        return "mdi-content-mail grey-text";
+      case "rejected":
+        return "mdi-content-block black-text";
+      case "assigned":
+        return "mdi-toggle-radio-button-on blue-text";
+      case "done":
+        return "mdi-toggle-check-box green-text";
+      default:
+        break;
     }
   }
+
 });
 
 Template.tasks.events({
@@ -123,7 +153,8 @@ Template.tasks.events({
     $('select').material_select();//update select box
     $('#add-task').openModal();
   },
-  'click #view-task-button': function (event, target) {
+  'click .view-task-button': function (event, target) {
+    Session.set("selectedTaskId", this._id);
     $('#task-view #title').html(this.title);
     $('#task-view #duedate').html(this.dueDate);
     $('#task-view #description').html(this.description);
@@ -137,7 +168,7 @@ Template.tasks.events({
       $('#task-view #unvolunteer-button').hide();
       $('#task-view #volunteer-button').show();
     }
-
+    //$("#task-view").openModal();
   },
   'click #volunteer-button': function (event, target) {
     audio.play();
