@@ -4,8 +4,11 @@ Template.volunteers.onRendered(function () {
 Template.volunteers.helpers({
   Volunteers: function () {
     var task = Tasks.findOne(Session.get("selectedTaskId"));
+    if (task){
+      $('#rate-section').toggle(task.status == "done");
+    }
     var volunteersForTask = task && task.volunteers ? task.volunteers : [];
-    return Meteor.users.find({ _id: { $in: volunteersForTask } }).map(function (doc) {
+    var users =  Meteor.users.find({ _id: { $in: volunteersForTask } }).map(function (doc) {
       if (doc.profile.tags) {
         var tags = doc.profile.tags.map(function (tagId) {
           return Tags.findOne(tagId);
@@ -15,13 +18,21 @@ Template.volunteers.helpers({
         });
       }
       var isApproved = task.approvedVolunteers ? task.approvedVolunteers.indexOf(doc._id) !== -1 : false;
+      var rating = 0.001;
+      if(task.ratings){
+        rating = task.ratings[doc._id];
+        if(rating == undefined)
+          rating = 0.001;
+      }
       return _.extend(doc, {
-        isApproved: isApproved
+        isApproved: isApproved,
+        rating:rating
       });
     });
+    return users;
   },
-  isAssigned: function(){
-    return Session.get("selectedTaskId") && Tasks.findOne(Session.get("selectedTaskId")).status == "assigned";
+  isChecked: function (status) {
+    return Session.get("selectedTaskId") && Tasks.findOne(Session.get("selectedTaskId")) && Tasks.findOne(Session.get("selectedTaskId")).status == status ? "checked" : "";
   }
 });
 Template.volunteers.events({
@@ -34,11 +45,23 @@ Template.volunteers.events({
     });
     return false;
   },
-  "click  .volunteer-action": function (event, target) {
-    Meteor.call("updateTaskStatus", Session.get("selectedTaskId"), $(event.target).data("status"), function (error, result) {
+  "click  input[name=status-group]:radio": function (event, target) {
+    var status = $('.card-action input[name=status-group]:checked').attr("id");
+    var taskId = Session.get("selectedTaskId");
+    $("#rate-section").toggle(status == "done");
+    Meteor.call("updateTaskStatus", taskId, status, function (error, result) {
       if (error)
         console.log(error);
     });
     return false;
+  },
+  "click .rating-bar": function (event, target) {
+    var rating = $(event.currentTarget).data('userrating');
+    var userId = $(event.currentTarget).parent().data('value');
+    var taskId = Session.get("selectedTaskId");
+    Meteor.call("rateVolunteer", taskId, userId, rating, function (error, result) {
+      if (error)
+        console.log(error);
+    });
   }
 });

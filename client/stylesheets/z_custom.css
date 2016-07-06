@@ -1,33 +1,41 @@
-span.badge{
+span.badge {
   min-width: inherit;
 }
+
 span.badge.new:after {
-    content: "" !important;
+  content: "" !important;
 }
+
 @media only screen and (max-width: 992px) {
   .side-nav.fixed {
     left: 0;
   }
 }
-.task-description{
+
+.task-description {
   margin-right: 100px !important;
 }
+
 .task-add {
   position: absolute;
   right: 10px;
   top: 76px;
 }
+
 .task-card-date {
   font-size: 1.0rem;
   margin: 0;
   color: #fff;
 }
+
 .collection-header {
   padding: 20px;
 }
-#task-view{
+
+#task-view {
   /*background-color: #39373A;*/
 }
+
 .modal-card .card-content-bg {
   /*background: url("../images/task-content-bg.jpg") no-repeat center center;*/
   background-color: #fff;
@@ -36,11 +44,14 @@ span.badge.new:after {
   -o-background-size: cover;
   background-size: cover;
 }
-.modal-card{
-  margin:0;
+
+.modal-card {
+  margin: 0;
 }
 
+
 /* modal card */
+
 .modal-card .modal-card-title {
   margin: 0;
   font-weight: 300;
@@ -52,19 +63,23 @@ span.badge.new:after {
   margin: 0;
   color: #fff;
 }
-.modal-card .duedate{
+
+.modal-card .duedate {
   float: left;
 }
-.modal-card .hours{
+
+.modal-card .hours {
   float: right;
 }
+
 .modal-card .card-content {
-  color:#000;
+  color: #000;
 }
 
 .modal-card .card-header {
   padding: 20px 20px 40px;
 }
+
 .modal-card #hours {
   padding: 0 0.3em;
 }
@@ -73,17 +88,41 @@ span.badge.new:after {
   color: #f44336;
 }
 
-.collection-item .manage-content{
+.collection-item .manage-content {
   position: absolute;
   right: 15px;
   bottom: 15px;
   color: #9e9e9e;
 }
-.tag-color-view{
-  padding-left:20px;
-  margin-right:5px;
+
+.tag-color-view {
+  padding-left: 20px;
+  margin-right: 5px;
 }
-.location{
-  position:absolute;
-  right:45px;
+
+.location {
+  position: absolute;
+  right: 45px;
+}
+
+.volunteer-section {
+  border-top: 1px solid rgba(160, 160, 160, 0.2);
+  color: black;
+  padding: 20px
+}
+.card-action label{
+  padding-left: 25px !important;
+  margin-right:15px;
+}
+.rating-bar{
+  cursor: pointer;
+  line-height: 1.5em;
+  padding-left: 20px;
+}
+.rating-bar .current-rating {
+  color: #ff5722;
+}
+
+.rating-bar .active {
+  color: #ffeb3b;
 }

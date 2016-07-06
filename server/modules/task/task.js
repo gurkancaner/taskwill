@@ -68,21 +68,31 @@ Meteor.methods({
     switch (status) {
       case "open":
         if (Meteor.userCan("manageTasks")) {
-          Tasks.update(id, { $set: { status: status } });
+          Tasks.update(id, { $set: { status: status, ratings: {} } });
         } else {
-          Tasks.update({ _id: id, createdBy: Meteor.userId(), status: "assigned" }, { $set: { status: status } })
+          Tasks.update({ _id: id, createdBy: Meteor.userId(), status: { $in: ["assigned", "done"] } }, 
+          { $set: { status: status, ratings: {} } })
         }
         break;
       case "assigned":
         if (Meteor.userCan("manageTasks")) {
-          Tasks.update(id, { $set: { status: status } });
+          Tasks.update(id, { $set: { status: status, ratings: {} } });
         } else {
-          Tasks.update({ _id: id, createdBy: Meteor.userId(), status: "open" }, { $set: { status: status } })
+          Tasks.update({ _id: id, createdBy: Meteor.userId(), status: { $in: ["open", "done"] } }, 
+          { $set: { status: status, ratings: {} } });
+        }
+        break;
+      case "done":
+        if (Meteor.userCan("manageTasks")) {
+          Tasks.update(id, { $set: { status: status, ratings: {}} });
+        } else {
+          Tasks.update({ _id: id, createdBy: Meteor.userId(), status: { $in: ["open", "assigned"] } }, 
+          { $set: { status: status, ratings: {} } });
         }
         break;
       case "rejected":
         if (Meteor.userCan("manageTasks")) {
-          Tasks.update(id, { $set: { status: status } });
+          Tasks.update(id, { $set: { status: status, ratings: {} } });
         }
         break;
 
@@ -143,6 +153,21 @@ Meteor.methods({
           Notification.sendToUser(volunteerId, taskId, "disapproveVolunteer");
       }
     });
-    console.log(selector);
   },
+  "rateVolunteer": function (taskId, userId, rating) {
+    //check validity
+    if (Number(rating) > 0 && Number(rating) <= 5) {
+      //save rating
+      var key = "ratings." + userId;
+      var updateObject = {};
+      updateObject[key] = rating;
+      Tasks.update({
+        _id: taskId,
+        createdBy: Meteor.userId(),
+        status: "done",
+        volunteers: userId
+      }, { $set: updateObject });
+      //add to 5 series, update every 5 rating
+    }
+  }
 });

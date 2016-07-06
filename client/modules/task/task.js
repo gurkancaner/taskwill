@@ -64,7 +64,11 @@ Template.tasks.helpers({
     });
   },
   Levels: function () {
-    return _.range(0, +Meteor.user().level + 1);
+    var upper = 1;
+    if (Meteor.user() && Meteor.user().level)
+      upper = +Meteor.user().level + 1;
+    return _.range(0, upper);
+
   },
   isViewingOpenTasks: function () {
     return Router.current().params.status == undefined || Router.current().params.status == "open";
@@ -86,7 +90,7 @@ Template.tasks.helpers({
       case "rejected":
         return "mdi-content-block black-text";
       case "assigned":
-        return "mdi-toggle-radio-button-on blue-text";
+        return "mdi-toggle-radio-button-on deep-orange-text";
       case "done":
         return "mdi-toggle-check-box green-text";
       default:

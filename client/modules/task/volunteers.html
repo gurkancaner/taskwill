@@ -3,7 +3,7 @@
     <div class="card-content">
         <div id="description"></div>
     </div>    
-    <div class="row" style="border-top: 1px solid rgba(160, 160, 160, 0.2); color:black; padding:20px">
+    <div class="row volunteer-section">
         <div class="col s12 m4 l3">
             <h5 class="header">{{_ "Volunteers"}}</h5>
         </div>
@@ -48,12 +48,36 @@
             </ul>
         </div>
     </div>
+    <div id="rate-section" class="row volunteer-section">
+        <div class="col s12 m4 l3">
+            <h5 class="header">{{_ "Rate"}}</h5>
+        </div>
+        <div class="col s12 m12 l12">
+            <ul>
+                {{#each Volunteers}}
+                {{#if isApproved}}
+                <li data-value={{_id}}> 
+                    <div class="left">{{profile.name}}</div> 
+                    {{> starsRating  rating=rating class='rating-bar' mutable=true size='lg'}}
+                </li>
+                {{/if}}
+                {{else}}
+                <li>
+                    {{_ "No volunteers to rate."}}
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
     <div class="card-action">
-        {{#if isAssigned}}
-            <a id="mark-as-open"  class="volunteer-action red-text" data-status="open" href="#"><i class="mdi-toggle-radio-button-on tiny"></i> {{_ "ASSIGNED"}}</a>
-        {{else}}
-            <a id="mark-as-assigned" class="volunteer-action red-text" data-status="assigned" href="#"><i class="mdi-image-panorama-fisheye tiny"></i> {{_ "MARK AS ASSIGNED"}}</a>
-        {{/if}}
+        <input class="change-status with-gap" name="status-group" type="radio" id="open" {{isChecked "open"}} />
+        <label for="open">{{_ "OPEN"}}</label>
+
+        <input class="change-status with-gap"  name="status-group" type="radio" id="assigned" {{isChecked "assigned"}} />
+        <label for="assigned">{{_ "ASSIGNED"}}</label>
+
+        <input class="change-status with-gap" name="status-group" type="radio" id="done" {{isChecked "done"}} />
+        <label for="done">{{_ "DONE"}}</label>
         <a class="modal-action modal-close right" href="#">Kapat</a>
     </div>
 </div>
