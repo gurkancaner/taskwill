@@ -58,7 +58,7 @@ Meteor.methods({
       }
     }
     Tasks.update(selector, { $set: valuesObj }, function (error, result) {
-      if (!error) {
+      if (!error && result != 0) {
         if (Meteor.userCan("manageTasks") && status == "open")
           Notification.send("openTask", id);
       }
@@ -135,7 +135,14 @@ Meteor.methods({
     if (!Meteor.userCan("manageTasks")) {
       selector.createdBy = Meteor.userId();
     }
-    Tasks.update(selector, updateMethod);
+    Tasks.update(selector, updateMethod, function (error, result) {
+      if (!error && result != 0) {
+        if (status)
+          Notification.sendToUser(volunteerId, taskId, "approveVolunteer");
+        else
+          Notification.sendToUser(volunteerId, taskId, "disapproveVolunteer");
+      }
+    });
     console.log(selector);
   },
 });

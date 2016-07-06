@@ -168,7 +168,7 @@ Template.tasks.events({
       $('#task-view #unvolunteer-button').hide();
       $('#task-view #volunteer-button').show();
     }
-    //$("#task-view").openModal();
+    $("#task-view").openModal();
   },
   'click #volunteer-button': function (event, target) {
     audio.play();

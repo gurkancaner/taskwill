@@ -21,7 +21,7 @@ Template.volunteers.helpers({
     });
   },
   isAssigned: function(){
-    return Tasks.findOne(Session.get("selectedTaskId")).status == "assigned";
+    return Session.get("selectedTaskId") && Tasks.findOne(Session.get("selectedTaskId")).status == "assigned";
   }
 });
 Template.volunteers.events({

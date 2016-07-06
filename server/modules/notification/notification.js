@@ -10,11 +10,14 @@ Meteor.methods({
         Notifications.update({
             userId: Meteor.userId()
         },
-            {
-                $set: {
-                    read: true
-                }
-            });
+        {
+            $set: {
+                read: true
+            }
+        },
+        {
+            multi:true
+        });
     }
 });
 
@@ -44,7 +47,6 @@ Notification = {
                     Notification.sendToUser(user._id, id, type);
                 }, this);
                 break;
-
             default:
                 break;
         }
