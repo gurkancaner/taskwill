@@ -1,4 +1,6 @@
 {
   "login": "Login",
-  "level_number": "Level %s"
+  "level_number": "Level %s",
+  "number_hours": "<b>%s</b> Hours",
+  "average_rating": "Average of %s ratings"
 }

@@ -7,5 +7,7 @@
   "Settings": "Ayarlar",
   "My Tasks": "Görevlerim",
   "My Requests": "Taleplerim",
-  "Waiting Tasks": "Bekleyen İşler"
+  "Waiting Tasks": "Bekleyen İşler",
+  "number_hours": "<b>%s</b> Saat",
+  "average_rating": "%s puanın ortalaması"
 }

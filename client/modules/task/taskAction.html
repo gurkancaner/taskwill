@@ -1,0 +1,21 @@
+<template name="taskAction">
+    <div class="card-action black-text">
+        {{#if equals status "done"}}
+        <div class="left valign-wrapper">
+            <div class="left">{{_ "Requester Rating"}}</div> 
+            {{> starsRating  rating=rating class='rating-bar' mutable=isRateble size='lg'}}
+        </div>
+        <p class="clear left grey-text ultra-small" style="margin-bottom:20px">
+            {{#if isRateble}}
+                    {{_ "Please rate the requester for this task."}}
+            {{else}}
+                    {{_ "You can not rate after 1 week of completing task."}}
+            {{/if}}
+        </p>
+        {{else}}
+            <a id="volunteer-button" class="red-text" href="#"><i class="mdi-action-favorite-outline tiny"></i> GÖNÜLLÜ OL</a>
+            <a id="unvolunteer-button"  class="red-text" href="#"><i class="mdi-action-favorite tiny"></i> BU GÖREV İÇİN GÖNÜLLÜ OLDUNUZ</a>
+        {{/if}}
+        <a class="modal-action modal-close right" href="#">Kapat</a>
+    </div>
+</template>

@@ -20,7 +20,10 @@ Meteor.publish('userData', function () {
   if (this.userId) {
     return Meteor.users.find(this.userId, {
       fields: {
-        level: 1
+        level: 1,
+        rating:1,
+        numberOfRating:1,
+        totalRating:1
       }
     });
   }

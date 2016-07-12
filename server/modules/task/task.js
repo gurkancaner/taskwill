@@ -84,10 +84,10 @@ Meteor.methods({
         break;
       case "done":
         if (Meteor.userCan("manageTasks")) {
-          Tasks.update(id, { $set: { status: status, ratings: {}} });
+          Tasks.update(id, { $set: { status: status, ratings: {}, closedAt: new Date() } });
         } else {
           Tasks.update({ _id: id, createdBy: Meteor.userId(), status: { $in: ["open", "assigned"] } }, 
-          { $set: { status: status, ratings: {} } });
+          { $set: { status: status, ratings: {}, closedAt: new Date() } });
         }
         break;
       case "rejected":
@@ -166,6 +166,22 @@ Meteor.methods({
         createdBy: Meteor.userId(),
         status: "done",
         volunteers: userId
+      }, { $set: updateObject });
+      //add to 5 series, update every 5 rating
+    }
+  },
+  "rateRequester": function (taskId, rating) {
+    //check validity
+    if (Number(rating) > 0 && Number(rating) <= 5) {
+      //save rating
+      var key = "requesterRatings." + Meteor.userId();
+      var updateObject = {};
+      updateObject[key] = rating;
+      Tasks.update({
+        _id: taskId,
+        status: "done",
+        volunteers: Meteor.userId(),
+        closedAt:{$gte:moment().subtract(1, 'weeks').toDate()}
       }, { $set: updateObject });
       //add to 5 series, update every 5 rating
     }

@@ -2,7 +2,45 @@
     <h4>{{_ "Profile"}}</h4>
 <form id="profile-form">
 <div class="row">
-    <div class="col s12 m6 l6">
+    <div class="col s12 m6 l4">
+        <ul id="issues-collection" class="collection">
+            <li class="collection-item avatar">
+                <i class="mdi-action-trending-up red circle"></i>
+                <span class="collection-header">{{_ "Your Performance"}}</span>
+                <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+            </li>
+            <li class="collection-item">
+                <div class="row">
+                    <div class="col s7">
+                        <p class="collections-title">{{{_ "number_hours" profile.target}}}</p>
+                        <p class="collections-content ultra-small grey-text">{{_ "Yearly Target"}}</p>
+                    </div>
+                    <div class="col s2">
+                        <span class="task-cat pink accent-2">70</span>
+                    </div>
+                    <div class="col s3">
+                        <div class="progress">
+                                <div class="determinate" style="width: 70%"></div>   
+                        </div>                                                
+                    </div>
+                </div>
+            </li>
+            
+            <li class="collection-item">
+                <div class="row">
+                    <div class="col s7">
+                        <p class="collections-title">{{_ "Rating"}}</p>
+                        <p class="collections-content  ultra-small grey-text">{{_ "average_rating" numberOfRating}}</p>
+                    </div>
+                    
+                    <div class="col s5">
+                        {{> starsRating  rating=rating class='right rating-bar'  mutable=false size='lg'}}                                               
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="col s12 m6 l8">
         <div class="card-panel">
             <h4 class="header">{{_ "PERSONAL INFORMATION"}}</h4>
             <div class="row">
@@ -26,19 +64,8 @@
                         <label class="active" for="about">{{_ "About Yourself"}}</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <button class="submit btn-floating btn-large btn-flat cyan waves-effect waves-light right modal-close" type="submit" name="action">
-                            <i class="mdi-content-save right"></i>
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col s12 m6 l6">
-        <div class="card-panel">
             <h4 class="header">{{_ "PREFERENCES"}}</h4>
             <div class="row">
                 <div id="" class="col s12">
@@ -46,6 +73,12 @@
                         <div class="input-field col s12">
                         <input id="location" type="text" class="elem" value="{{profile.location}}">
                         <label class="active" for="location">{{_ "Location"}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <input id="target" type="text" class="elem" value="{{profile.target}}">
+                        <label class="active" for="target">{{_ "Yearly Target Hour"}}</label>
                         </div>
                     </div>
                     <div class="row">

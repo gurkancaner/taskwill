@@ -1,5 +1,5 @@
 Meteor.methods({
-  "updateProfile": function (name, phone, about, location, tags) {
+  "updateProfile": function (name, phone, about, location, target, tags) {
       Meteor.users.update({
         _id: Meteor.userId(),
       }, {
@@ -8,6 +8,7 @@ Meteor.methods({
             "profile.phone": phone,
             "profile.about": about,
             "profile.location": location,
+            "profile.target": target,
             "profile.tags": tags,
           }
         });

@@ -42,6 +42,9 @@ Template.headerNav.helpers({
       default:
         break;
     }
+  },
+  rating: function(){
+    return Meteor.user().rating;
   }
 });
 

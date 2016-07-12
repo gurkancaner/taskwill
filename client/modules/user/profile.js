@@ -20,8 +20,9 @@ Template.profile.events({
       var about = $("#profile-form #about").val();
       var location = $("#profile-form #location").val();
       var phone = $("#profile-form #phone").val();
+      var target = $("#profile-form #target").val();
       var tags = $("#profile-form #tags").val();
-      Meteor.call("updateProfile", name, phone, about, location, tags, function (error, result) {
+      Meteor.call("updateProfile", name, phone, about, location, target, tags, function (error, result) {
         if (error)
           console.log(error);
         else

@@ -49,16 +49,23 @@
         </div>
     </div>
     <div id="rate-section" class="row volunteer-section">
-        <div class="col s12 m4 l3">
+        <div class="col s12 m6 l6">
             <h5 class="header">{{_ "Rate"}}</h5>
+            <p class="clear left grey-text ultra-small" >
+                {{#if isRateble}}
+                    {{_ "Please rate the volunteers for this task."}}
+                {{else}}
+                    {{_ "You can not rate after 1 week of completing task."}}
+                {{/if}}
+            </p>
         </div>
         <div class="col s12 m12 l12">
             <ul>
                 {{#each Volunteers}}
                 {{#if isApproved}}
-                <li data-value={{_id}}> 
-                    <div class="left">{{profile.name}}</div> 
-                    {{> starsRating  rating=rating class='rating-bar' mutable=true size='lg'}}
+                <li data-value={{_id}} class="valign-wrapper" style="padding-bottom:20px"> 
+                    {{> starsRating  rating=rating class='left rating-bar'  mutable=isRateble size='lg'}}
+                    <div>{{profile.name}}</div> 
                 </li>
                 {{/if}}
                 {{else}}

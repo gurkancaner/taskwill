@@ -4,11 +4,11 @@ Template.volunteers.onRendered(function () {
 Template.volunteers.helpers({
   Volunteers: function () {
     var task = Tasks.findOne(Session.get("selectedTaskId"));
-    if (task){
+    if (task) {
       $('#rate-section').toggle(task.status == "done");
     }
     var volunteersForTask = task && task.volunteers ? task.volunteers : [];
-    var users =  Meteor.users.find({ _id: { $in: volunteersForTask } }).map(function (doc) {
+    var users = Meteor.users.find({ _id: { $in: volunteersForTask } }).map(function (doc) {
       if (doc.profile.tags) {
         var tags = doc.profile.tags.map(function (tagId) {
           return Tags.findOne(tagId);
@@ -19,20 +19,24 @@ Template.volunteers.helpers({
       }
       var isApproved = task.approvedVolunteers ? task.approvedVolunteers.indexOf(doc._id) !== -1 : false;
       var rating = 0.001;
-      if(task.ratings){
+      if (task.ratings) {
         rating = task.ratings[doc._id];
-        if(rating == undefined)
+        if (rating == undefined)
           rating = 0.001;
       }
       return _.extend(doc, {
         isApproved: isApproved,
-        rating:rating
+        rating: rating
       });
     });
     return users;
   },
   isChecked: function (status) {
     return Session.get("selectedTaskId") && Tasks.findOne(Session.get("selectedTaskId")) && Tasks.findOne(Session.get("selectedTaskId")).status == status ? "checked" : "";
+  },
+  isRateble: function () {
+    var closedAt = safeGet(Tasks.findOne(Session.get("selectedTaskId")), "closedAt");
+    return closedAt >= moment().subtract(1, 'weeks').toDate();
   }
 });
 Template.volunteers.events({

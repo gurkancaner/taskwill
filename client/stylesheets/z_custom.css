@@ -119,8 +119,11 @@ span.badge.new:after {
   line-height: 1.5em;
   padding-left: 20px;
 }
+.rating-bar .stars{
+  color: rgba(255, 64, 129, 0.22);
+}
 .rating-bar .current-rating {
-  color: #ff5722;
+  color: #ff4081;
 }
 
 .rating-bar .active {
