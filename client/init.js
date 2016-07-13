@@ -14,6 +14,10 @@ Deps.autorun(function () {
 
 
 Meteor.startup(function () {
+  TAPi18n.setLanguage(getUserLanguage())
+      .done(function () {
+        moment.locale(getUserLanguage());
+      });
 });
 Template.sideNav.onRendered(function () {
 

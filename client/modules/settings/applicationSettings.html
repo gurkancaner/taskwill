@@ -16,13 +16,26 @@
                         <img src="/static/logo.png" id="selected-logo">
                         <div class="file-field input-field">
                         <div class="btn">
-                            <span>Logo</span>
+                            <span>{{_ "Application Logo"}}</span>
                             <input type="file" id="logo-file">
                         </div>
                         <div class="file-path-wrapper">
                             <input class="file-path validate" type="text">
                         </div>
-                        <p class="ultra-small grey-text">{{_ "Logo size is 200x34, format is png"}}</p>
+                        <p class="ultra-small grey-text">{{_ "image_size_description" "200x34"}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <img src="/static/login-logo.png" id="selected-login-logo">
+                        <div class="file-field input-field">
+                        <div class="btn">
+                            <span>{{_ "Login Logo"}}</span>
+                            <input type="file" id="login-logo-file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                        <p class="ultra-small grey-text">{{_ "image_size_description" "150x150"}}</p>
                         </div>
                     </div>
                     <div class="row">

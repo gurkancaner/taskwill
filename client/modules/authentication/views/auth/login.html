@@ -6,11 +6,11 @@
                     <div class="row">
 
                         <div class="input-field col s12 center-align" >
-                            <img src="images/login-logo.png" alt=""
+                            <img id="login-logo-img" src="images/login-logo.png" alt=""
                                  class="circle responsive-img center profile-image-login">
                             <div class="col s12">
 
-                                <h5>TaskWill</h5>
+                                <h5>{{getApplicationName}}</h5>
                             </div>
 
 
@@ -48,6 +48,11 @@
                     <div class="row">
                         <div class="input-field col s12">
                             <button type="submit" href="#" class="btn waves-effect waves-light col s12">{{_ "Login"}}</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button type="submit" href="#" id="login-with-twitter" class="login-btn btn waves-effect waves-light col s12">{{_ "Login with Twitter"}}</button>
                         </div>
                     </div>
                     <div class="row">

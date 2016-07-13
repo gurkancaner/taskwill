@@ -12,5 +12,6 @@
   "volunteered_for_this_task": "YOU VOLUNTEERED FOR THIS TASK",
   "task_for_you":"A task for you",
   "assigned_to_task": "Assigned to task %s",
-  "unassigned_from_task": "Unassigned from task %s"
+  "unassigned_from_task": "Unassigned from task %s",
+  "image_size_description": "Image size is %s, format is png."
 }

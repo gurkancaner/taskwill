@@ -1,6 +1,11 @@
 {
   "Login": "Giriş",
   "Email": "Eposta",
+  "Password": "Parola",
+  "Remember me": "Beni hatırla",
+  "Name": "Ad",
+  "Password Again": "Parola Yeniden",
+  "Already have an account?": "Zaten hesabınız var mı?",
   "level_number": "Düzey %s",
   "Tasks": "İşler",
   "Incoming Requests": "Gelen Talepler",
@@ -50,5 +55,11 @@
   "task_for_you":"Senin için bir görev",
   "assigned_to_task": "%s görevine atandınız",
   "unassigned_from_task": "%s görevinden alındınız",
-  "Explore Tasks": "İşleri Keşfet"
+  "Explore Tasks": "İşleri Keşfet",
+  "image_size_description": "Resim %s boyutunda ve png formatında olmalıdır.",
+  "Login with Twitter": "Twitter ile Giriş Yap",
+  "Register Now!": "Hemen Kaydol!",
+  "Forgot password?": "Parolanı mı unuttun?",
+  "Register": "Kaydol",
+  "It is free!": "Ücretsiz"
 }
