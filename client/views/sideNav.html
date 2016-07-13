@@ -57,6 +57,10 @@
                         {{/if}}
                           <li class="{{isActive 'tags'}}"><a href="{{pathFor 'tags'}}" >{{_ "Tags"}}</a>
                           </li>
+                        {{#if userCan "changeApplicationSettings"}}
+                        <li class="bold {{isActive 'settings/application'}}"><a href="{{pathFor "settings/application"}}" class="waves-effect waves-green">{{_ "Application Settings"}}</a>
+                        </li>
+                        {{/if}}
                       </ul>
                   </div>
               </li>

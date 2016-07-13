@@ -27,5 +27,12 @@ ApplicationController = RouteController.extend({
   },
   onAfterAction: function () {
     $('.collapsible').collapsible();
+    var prefix ="";
+    if(this.route.options.title)
+      prefix = TAPi18n.__(this.route.options.title) + " | ";
+    document.title =  prefix + safeGet(Settings.findOne({
+      key: 'name'
+    }), 'value', document.title);
+    
   }
 });

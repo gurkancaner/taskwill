@@ -8,6 +8,7 @@ Deps.autorun(function () {
       });
   });
   Meteor.subscribe("notifications");
+  Meteor.subscribe("settings");
 });
 
 

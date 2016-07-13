@@ -84,12 +84,17 @@ Router.route('mytasks/:type',{
 
 //----------------settings start--------------
 Router.route('tags');
+Router.route('settings/application',{
+    permission:"changeApplicationSettings",
+    template: "applicationSettings",
+    title: "Application Settings"
+});
 
 //----------------settings end--------------
 
 Router.route('/', {
   name: 'home',
-  template: 'home'
+  template: 'tasks'
 });
 // Router.route('story/add');
 // Router.route('story/edit/:_id', {

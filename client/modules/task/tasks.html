@@ -120,18 +120,18 @@
                         <div class="row">
                             {{#if isViewingOpenTasks}}
                             <div class="input-field col s12">
-                                <button class="submit btn cyan waves-effect waves-light right modal-close" type="submit" name="action">Submit
+                                <button class="submit btn cyan waves-effect waves-light right modal-close" type="submit" name="action">{{_ "Save"}}
                                 <i class="mdi-content-send right"></i>
                                 </button>
                             </div>
                             {{else}}
                             <div class="input-field col s6">
-                                <button id="rejected" class="submit btn red waves-effect waves-light right modal-close" name="action">Reject
+                                <button id="rejected" class="submit btn red waves-effect waves-light right modal-close" name="action">{{_ "Reject"}}
                                 <i class="mdi-content-block right"></i>
                                 </button>
                             </div>
                             <div class="input-field col s6">
-                                <button id="open" class="submit btn green waves-effect waves-light right modal-close"  name="action">Approve
+                                <button id="open" class="submit btn green waves-effect waves-light right modal-close"  name="action">{{_ "Approve"}}
                                 <i class="mdi-action-done right"></i>
                                 </button>
                             </div>
@@ -151,7 +151,7 @@
       <div class="modal-content">
         <h4>{{_ "Delete Task"}}</h4>
         <b><span id="task-title"></span></b>
-        <p>{{_ "Do you really want to delete this?"}}</p>
+        <p>{{_ "delete_confirm"}}</p>
       </div>
       <div class="modal-footer">
         <a href="#" id="confirm-task-delete" class=" modal-action modal-close waves-effect waves-green btn-flat red-text">{{_ "Delete"}}</a>
@@ -166,7 +166,7 @@
                 <div class="card-title">
                     <h4 id="title" class="modal-card-title"></h4>
                     <p id="duedate" class="modal-card-info duedate"></p>
-                    <div  class="modal-card-info hours valign-wrapper"><i class="mdi-image-timelapse tiny"></i> <span id="hours" > </span> hours</div>
+                    <div  class="modal-card-info hours valign-wrapper"><i class="mdi-image-timelapse tiny"></i> {{{_ "number_hours" '<span id="hours" > </span>'}}}</div>
                 </div>
             </div>
             {{#if equals getTaskSubtitle "My Requests"}}

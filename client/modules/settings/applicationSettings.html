@@ -1,0 +1,41 @@
+<template name="applicationSettings">
+   <h4>{{_ "Application Settings"}}</h4>
+<form id="application-settings-form">
+<div class="row">
+    <div class="col s12 m6 l8">
+        <div class="card-panel">
+            <div class="row">
+                <div id="" class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                        <input id="name" type="text" class="elem" value="{{applicationName}}">
+                        <label class="active" for="name">{{_ "Application Name"}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <img src="/static/logo.png" id="selected-logo">
+                        <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Logo</span>
+                            <input type="file" id="logo-file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                        <p class="ultra-small grey-text">{{_ "Logo size is 200x34, format is png"}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <button class="submit btn-floating btn-large btn-flat cyan waves-effect waves-light right" type="submit" name="action">
+                            <i class="mdi-content-save right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+</template>

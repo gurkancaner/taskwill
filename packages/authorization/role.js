@@ -49,7 +49,7 @@ Role = {
         volunteerForTask: "Volunteer for task",
         manageTasks: "Manage tasks",
         changeSettings: "Change Settings",
-
+        changeApplicationSettings: "Change Application Settings"
     },
     /**
      * Throws an error if the role does not have the permissions

@@ -2,5 +2,15 @@
   "login": "Login",
   "level_number": "Level %s",
   "number_hours": "<b>%s</b> Hours",
-  "average_rating": "Average of %s ratings"
+  "average_rating": "Average of %s ratings",
+  "rate_the_volunteers":"Please rate the volunteers worked on this task.",
+  "no_rate_after_a_week":"You can not rate after 1 week of completing task.",
+  "no_volunteers":"No volunteers yet.",
+  "no_volunteers_to_rate":"No volunteers to rate.",
+  "delete_confirm":"Do you really want to delete this?",
+  "rate_the_requester": "Please rate the requester for this task.",
+  "volunteered_for_this_task": "YOU VOLUNTEERED FOR THIS TASK",
+  "task_for_you":"A task for you",
+  "assigned_to_task": "Assigned to task %s",
+  "unassigned_from_task": "Unassigned from task %s"
 }

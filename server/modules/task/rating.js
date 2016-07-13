@@ -27,4 +27,4 @@ Rating = {
   updateUserRating: function (userId, rating) {
     Meteor.users.update({_id: userId}, {$inc:{totalRating:rating, numberOfRating:1}}); 
     } 
-  }
+}

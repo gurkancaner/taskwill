@@ -7,3 +7,4 @@ Meteor.users._transform = function (user) {
         rating = user.totalRating / user.numberOfRating;
     return _.extend(user, { rating: rating });
 }
+Settings = new Mongo.Collection("settings");

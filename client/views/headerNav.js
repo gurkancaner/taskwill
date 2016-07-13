@@ -1,3 +1,8 @@
+Template.headerNav.onRendered(function() {
+  $("#logo-img").attr("src", '/static/logo.png').error(function() {
+    $(this).attr("src", "/images/logo.png");
+  })
+});
 Template.headerNav.helpers({
   Notifications: function () {
     return Notifications.find({}, { "sort": { createdAt: -1 } }).map(function (doc) {
@@ -6,15 +11,15 @@ Template.headerNav.helpers({
       var icon;
       switch (doc.objectType) {
         case "openTask":
-          text = 'A task for you: "' + task.title + '"';
+          text = TAPi18n.__('a_task_for_you') +': "' + task.title + '"';
           icon = 'mdi-image-panorama-fisheye';
           break;
         case "approveVolunteer":
-          text = 'Assigned to "' + task.title + '"';
+          text = TAPi18n.__('assigned_to_task', task.title);
           icon = 'mdi-toggle-radio-button-on';
           break;
         case "disapproveVolunteer":
-          text = 'Unassigned from "' + task.title + '"';
+          text = TAPi18n.__('unassigned_from_task', task.title);
           icon = 'mdi-notification-dnd-forwardslash';
           break;
 
@@ -45,6 +50,9 @@ Template.headerNav.helpers({
   },
   rating: function(){
     return Meteor.user().rating;
+  },
+  getLogo: function(){
+    return
   }
 });
 

@@ -42,7 +42,7 @@
                 </li>
                 {{else}}
                 <li>
-                    {{_ "No volunteers yet."}}
+                    {{_ "no_volunteers"}}
                 </li>
                 {{/each}}
             </ul>
@@ -53,9 +53,9 @@
             <h5 class="header">{{_ "Rate"}}</h5>
             <p class="clear left grey-text ultra-small" >
                 {{#if isRateble}}
-                    {{_ "Please rate the volunteers for this task."}}
+                    {{_ "rate_the_volunteers"}}
                 {{else}}
-                    {{_ "You can not rate after 1 week of completing task."}}
+                    {{_ "no_rate_after_a_week"}}
                 {{/if}}
             </p>
         </div>
@@ -70,7 +70,7 @@
                 {{/if}}
                 {{else}}
                 <li>
-                    {{_ "No volunteers to rate."}}
+                    {{_ "no_volunteers_to_rate"}}
                 </li>
                 {{/each}}
             </ul>
@@ -85,7 +85,7 @@
 
         <input class="change-status with-gap" name="status-group" type="radio" id="done" {{isChecked "done"}} />
         <label for="done">{{_ "DONE"}}</label>
-        <a class="modal-action modal-close right" href="#">Kapat</a>
+        <a class="modal-action modal-close right" href="#">{{_ "Close"}}</a>
     </div>
 </div>
 </template>
